@@ -33,7 +33,7 @@ class MY_Log extends CI_Log {
 			$message .= $msg."\n";
 			
 			$to = $config['develop_email_to'];
-			$subject = '【'. $this->input->server('SERVER_NAME'). '】社内システムエラー発生！';
+			$subject = '【'. $config['program_env']. '】社内システムエラー発生！';
 			$headers = 'From: アクシスデベロッパー <'. $config['develop_email_from']. '>' . "\r\n";
 			$headers .= 'Content-type: text/plain; charset=utf-8\r\n';
 			
