@@ -1,0 +1,42 @@
+{% extends('common/base_list.twig') %}
+
+{% block js %}
+	{{ include('common/pager_js.twig') }}
+	{{ header.responsive_js("faq-table") }}
+{% endblock %}
+
+{% block title %}
+	FAQ一覧
+{% endblock %}
+
+{% block search %}
+	{{ main.text_block("search-col", "タイトル", "", 'search_title', search_title) }}
+	{{ main.text_block("search-col", "質問内容", "", 'search_question', search_question) }}
+{% endblock %}
+
+{% block main %}
+	<div id="list-area">
+		{% if list|length == 0 %}
+			{{ main.info_msg("データがありません。")}}
+		{% else %}
+			{{ main.pager_block() }}
+			<div id="faq-table">
+				<table class="list-table tablesorter">
+					{{ include('parts/list_col.twig')}}
+					<tbody id="container">
+						{% for key,item in list %}
+							<tr>
+								{% if session.user_level == '1' %}
+									<td class="ta-center"><a href="{{ base_url }}faq/FaqRegist/modify_input/{{ item.id }}"><i class="far fa-edit" aria-hidden="true"></i></a></td>
+								{% endif %}
+								<td class="ta-center">{{ item.title }}</td>
+								<td class="ta-center">{{ item.question }}</td>
+								<td class="ta-center"><input type="button" class="btn_detail" value="詳細" onclick="window.open('{{ base_url }}{{ class_path }}List/detail/{{ item.id }}', '詳細', 'width=900, height=550, menubar=no, toolbar=no, scrollbars=yes');"></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

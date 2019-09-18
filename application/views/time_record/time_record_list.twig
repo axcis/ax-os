@@ -1,0 +1,85 @@
+{% extends('common/base_list.twig') %}
+
+{% block js %}
+	$(function() {
+		$('[name=search_month]').change(function() {
+			list_display_none();
+		});
+		$('[name=search_scene]').change(function() {
+			list_display_none();
+		});
+		$('[name=search_employee]').change(function() {
+			list_display_none();
+		});
+	});
+	//一覧を非表示にする
+	function list_display_none() {
+		document.getElementById("timerecord-table").style.display="none";
+		document.getElementById("bulk-regist-area").style.display="none";
+	}
+	{{ header.responsive_js("timerecord-table") }}
+{% endblock %}
+
+{% block title %}
+	{{ month|date('Y年n月') }}勤怠一覧
+{% endblock %}
+
+{% block search %}
+	{{ main.select_block("search-col", "年月", 'search_month', month_map, search_month) }}
+	{{ main.select_block("search-col", "提出先", 'search_scene', scene_map, search_scene) }}
+	{% if session.user_level == '1' %}
+		{{ main.select_block("search-col", "社員名", 'search_employee', employee_map, search_employee) }}
+	{% endif %}
+{% endblock %}
+
+{% block main %}
+	<div id="list-area">
+		<div id="timerecord-table">
+			<table class="list-table">
+				{{ include('parts/list_col.twig')}}
+				<tbody id="container">
+					{% for key,item in list %}
+						<tr {% if item.week == '土' %} class="saturday" {% elseif item.week == '日' or item.week == '祝' %} class="sunday" {% endif %}>
+							<td class="ta-center">{% if modify_disable != '1' %}<a href="{{ base_url }}time_record/TimeRecordRegist/input/{{ key }}/{{ scene }}/{{ employee_id }}"><i class="far fa-edit" aria-hidden="true"></i></a>{% endif %}</td>
+							<td class="ta-center">{{ item.day }}</td>
+							<td class="ta-center">{{ item.week }}</td>
+							<td class="ta-center">{{ item.classification }}</td>
+							<td class="ta-center">{{ item.start_time }}</td>
+							<td class="ta-center">{{ item.end_time }}</td>
+							<td class="ta-right">{{ item.break_time }}</td>
+							<td class="ta-right">{{ item.prescribed_time }}</td>
+							<td class="ta-right">{{ item.over_work_time }}</td>
+							<td class="ta-right">{{ item.midnight_time }}</td>
+							<td class="ta-right">{{ item.midnight_break_time }}</td>
+							<td class="ta-right">{{ item.midnight_over_work_time }}</td>
+							<td class="ta-right">{{ item.work_time }}</td>
+							<td>{{ item.remark }}</td>
+						</tr>
+					{% endfor %}
+					{# 合計 #}
+					{% if total_list|length > 0 %}
+						<tr>
+							<td class="ta-center" colspan="6">合計</td>
+							<td class="ta-right">{{ total_list.break_time }}</td>
+							<td class="ta-right">{{ total_list.prescribed_time }}</td>
+							<td class="ta-right">{{ total_list.over_work_time }}</td>
+							<td class="ta-right">{{ total_list.midnight_time }}</td>
+							<td class="ta-right">{{ total_list.midnight_break_time }}</td>
+							<td class="ta-right">{{ total_list.midnight_over_work_time }}</td>
+							<td class="ta-right">{{ total_list.work_time }}</td>
+							<td></td>
+						</tr>
+					{% endif %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{#{% if session.user_level != '1' %}
+		<div id="bulk-regist-area">
+			{{ form.form_start("inputform", "", "input-box", base_url~class_path~"BulkRegist/", "post") }}
+				{{ form.form_hidden("", "month", month) }}
+			{{ form.form_end() }}
+			<input type="button" class="btn_bulk_regist" value="一括登録" onclick="sub_module('index', '一括登録');">
+		</div>
+	{% endif %}#}
+{% endblock %}

@@ -1,0 +1,77 @@
+{% macro main_start() %}
+	<div id="main-contents">
+		<div id="content-area" class="cf">
+{% endmacro %}
+
+{% macro info_msg(msg)%}
+	<div id="info-msg">
+		<p>{{ msg }}</p>
+	</div>
+{% endmacro %}
+
+{% macro main_end() %}
+		</div>
+	</div>
+{% endmacro %}
+
+{% macro pager_block(per_page_visible) %}
+	{% if per_page_visible != '0' %}
+		<form id="per-page">
+			<select>
+				<option>10</option>
+				<option>20</option>
+				<option>50</option>
+				<option>100</option>
+			</select>
+		</form>
+	{% endif %}
+	<div class="holder" id="pager"></div>
+{% endmacro %}
+
+{% macro event_start() %}
+	<div id="main-contents">
+		<div class="event-list">
+{% endmacro%}
+
+{% macro return_list(url, action) %}
+	<p class="action">
+		<input type="button" class="btn_return" value="一覧へ戻る" onclick="sub_redirect('{{ url }}','{{ action }}');">
+	</p>
+{% endmacro %}
+
+{% macro return_top(url) %}
+	<p class="action">
+		<input type="button" class="btn_return" value="トップページに戻る" onclick="sub_redirect('{{ url }}','TopPage');">
+	</p>
+{% endmacro %}
+
+{% macro text_block(class, title, id, name, value, readonly) %}
+	<div class="{{ class }}">
+		<p class="sel-title-o">{{ title }}</p>
+		<input type="text" id="{{ id }}" name="{% if name != "" %}{{ name }}{% else %}{{ id }}{% endif %}" value="{{ value }}" {% if readonly == "1" %}readonly{% endif %}>
+	</div>
+{% endmacro %}
+
+{% macro select_block(class, title, name, list, def, option) %}
+	<div class="{{ class }}"><p class="sel-title-o">{{ title }}</p>{{ form_select(name, list, def, option)|raw }}</div>
+{% endmacro %}
+
+{% macro checkbox_block(class, title, name, list, checked) %}
+	<div class="{{ class }}">
+		{% for key,value in list %}
+	 		{{ form_checkbox(name, key, value, "label"~key, checked)|raw }}
+	 	{% endfor %}
+	 </div>
+{% endmacro %}
+
+{% macro radio_block(class, title, name, list, selected) %}
+	<div class="{{ class }}">
+		{% for key,value in list %}
+	 		{{ form_radio(name, key, value, "label"~key, selected)|raw }}
+	 	{% endfor %}
+	 </div>
+{% endmacro %}
+
+{% macro spacer() %}
+	<div class="spacer"></div>
+{% endmacro %}

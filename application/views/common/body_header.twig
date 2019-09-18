@@ -1,0 +1,18 @@
+<body>
+<header id="header">
+	<div id="titleBox">
+	<div id="title-contents" class="cf">
+	    <h1>
+			<span class="site-title">{{ system_name }}</span> | {{ company_name }}
+		</h1>
+		{% if popup != "1"%}
+			<div id="logout-contents" class="cf">{{ include('common/logout.twig') }}</div>
+		{% endif %}
+	</div>
+	</div>
+	<div id="header-contents" class="cf">
+		<div id="logo">
+			<img alt="{{ company_name }}" src="{{ base_url }}view/_images/logo.png">
+		</div>
+	</div>
+</header>

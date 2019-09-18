@@ -1,0 +1,27 @@
+{% extends('common/base_input.twig') %}
+
+{% block js%}
+	$(function() {
+		//過去日付は選択不可
+		$('.datepicker').datepicker( 'option', 'minDate', '0' );
+	});
+{% endblock %}
+
+{% block title %}
+	{{ form.form_title("会議室予約") }}
+{% endblock %}
+
+{% block inputform %}
+	<dl>
+		<dt>{{ form.set_col("予約日付", 1) }}</dt>
+		<dd>{{ form.input_date("target_date", target_date) }}</dd>
+		<dt>{{ form.set_col("予約場所", 1) }}</dt>
+		<dd>{{ form_select('conference_id', conference_map, conference_id)|raw }}</dd>
+		<dt>{{ form.set_col("開始時間", 1) }}</dt>
+		<dd>{{ form_select("start_time", time_map, start_time)|raw }}</dd>
+		<dt>{{ form.set_col("終了時間", 1) }}</dt>
+		<dd>{{ form_select("end_time", time_map, end_time)|raw }}</dd>
+		<dt>{{ form.set_col("利用目的", 1) }}</dt>
+		<dd>{{ form.textarea("purpose", 50, 5, purpose) }}</dd>
+	</dl>
+{% endblock %}

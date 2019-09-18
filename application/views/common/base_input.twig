@@ -1,0 +1,52 @@
+{# 登録画面のbaseテンプレート #}
+{# 登録画面は基本的にこのテンプレートを継承し、mainに各オリジナルテンプレートの内容を記載すること #}
+
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/header.twig' as header %}
+
+{{ header.javascript_start }}
+	{% block js %}{% endblock %}
+{{ header.javascript_end }}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{% if action == 'modify' %}
+	{% set value = "更新" %}
+{% else %}
+	{% set value = "登録" %}
+{% endif %}
+
+{{ main.event_start }}
+	
+	{% block main %}
+	
+		{% block title %}{% endblock %}
+		<div class="err-area">
+			{{ include('common/err_msg.twig') }}
+		</div>
+		
+		{% if upload == '1' %}
+			{{ form.upload_start("inputform", "", "input-box", base_url~class_path~"Regist/", "post") }}
+		{% else %}
+			{{ form.form_start("inputform", "", "input-box", base_url~class_path~"Regist/", "post") }}
+		{% endif %}
+			{{ form.form_hidden("", "id", id) }}
+			{{ form.form_hidden("", "action", action) }}
+			{{ form.form_hidden("", "class_path", class_path) }}
+			{% block inputform %}{% endblock %}
+		{{ form.form_end }}
+		{{ form.action(action, value, delete_disable) }}
+		</div>
+		{{ main.return_list(base_url, class_path~"List") }}
+		</div>
+	
+	{% endblock %}
+	
+</div>
+
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

@@ -1,0 +1,71 @@
+{% extends('common/base_list.twig') %}
+
+{% block js %}
+	$(function() {
+		//チェック選択時の挙動
+		$(".checkbox").on("click", function(){
+			$('.checkbox').prop('checked', false);
+			$(this).prop('checked', true);
+			$.ajax({
+				type: "POST",
+				url: "{{ base_url }}conference/ConferenceAppointList/select/",
+				data: {
+					"target_date": $(this).val()
+				},
+				success: function(data) {
+					var arr = JSON.parse(data);
+					reWriteTable(arr[0]);
+					{{ header.responsive_js("conference-table") }}
+				}
+			});
+		});
+	});
+	//Listの書き換え
+	function reWriteTable(response) {
+		$("#conference-table-body tr").remove();
+		for (var i=0; i< response.length; i++) {
+			$("#conference-table-body").append(
+				$('<tr>').append(
+					$('<td class="modifiable ta-center">').html(response[i]['modify_url'])
+				).append(
+					$('<td class="employee_name ta-center">').text(response[i]['employee_name'])
+				).append(
+					$('<td class="target_date ta-center">').text(response[i]['target_date'])
+				).append(
+					$('<td class="room_name ta-center">').text(response[i]['room_name'])
+				).append(
+					$('<td class="start_time ta-center">').text(response[i]['start_time'])
+				).append(
+					$('<td class="end_time ta-center">').text(response[i]['end_time'])
+				).append(
+					$('<td class="purpose ta-center">').html(response[i]['purpose'])
+				)
+			);
+		}
+	}
+	{{ header.responsive_js("conference-table") }}
+{% endblock %}
+
+{% block title %}
+	会議室予約状況
+{% endblock %}
+
+{% block main %}
+	{{ calendar|raw }}
+	<div id="list-area">
+		<div id="conference-table">
+			<table class="list-table">
+				{{ include('parts/list_col.twig')}}
+				<tbody id="conference-table-body">
+					<td class="modifiable"></td>
+					<td class="employee_name"></td>
+					<td class="target_date"></td>
+					<td class="room_name"></td>
+					<td class="start_time"></td>
+					<td class="end_time"></td>
+					<td class="purpose"></td>
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

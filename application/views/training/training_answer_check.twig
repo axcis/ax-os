@@ -1,0 +1,75 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{% import 'parts/header.twig' as header %}
+
+{{ header.javascript_start }}
+	$(function() {
+		$('[name=search_training]').change(function() {
+			$.ajax({
+				type: "POST",
+				url: "{{ base_url }}training/TrainingAnswerCheck/select/",
+				data: {
+					"training_type": $(this).val()
+				},
+				success: function(data) {
+					var arr = JSON.parse(data);
+					reWriteTable(arr[0]);
+				}
+			});
+		});
+	});
+	
+	//Listの書き換え
+	function reWriteTable(response) {
+		$("#training-answer-count-table-body tr").remove();
+		for (var i=0; i< response.length; i++) {
+			$("#training-answer-count-table-body").append(
+				$('<tr>').append(
+					$('<td class="ta-center">').text(response[i]['name'])
+				).append(
+					$('<td class="ta-right">').text(response[i]['point'] + '点')
+				).append(
+					$('<td class="ta-center">').text(response[i]['answer_date'])
+				)
+			);
+		}
+		$('#training-answer-count-table').responsiveTable();
+	}
+	{{ header.responsive_js("training-answer-count-table") }}
+{{ header.javascript_end }}
+
+{{ main.main_start }}
+	
+	<div id="description">
+		<p>社内研修受講状況チェック</p>
+	</div>
+	<div id="search-area">
+		<p id="search-area-title">検索</p>
+		<div id="search-area-info">
+			{{ main.select_block("search-col", "研修内容", 'search_training', training_type_map, search_training) }}
+		</div>
+	</div>
+	<div id="list-area">
+		<div id="training-answer-count-table">
+			<table class="list-table tablesorter">
+				{{ include('parts/list_col.twig')}}
+				<tbody id="training-answer-count-table-body">
+					<td class="name"></td>
+					<td class="point"></td>
+					<td class="answer_date"></td>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	</div>
+	
+	{{ form.input_button("popup-close", "閉じる", "", "btn_return", "window.close(); return false;") }}
+	
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

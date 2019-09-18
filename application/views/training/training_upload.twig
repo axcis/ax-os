@@ -1,0 +1,51 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/header.twig' as header %}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{{ header.javascript_start }}
+	
+	function file_select_check(action, msg) {
+		
+		var file = document.getElementById('up_file').value;
+		if (file == '' || file == undefined) {
+			alert('ファイルが選択されていません。');
+			return false;
+		}
+		sub_module(action, msg);
+	}
+	
+{{ header.javascript_end }}
+
+{{ main.event_start }}
+	
+	{{ form.form_title("テキストアップロード") }}
+	
+	<div class="err-area">
+		{{ include('common/err_msg.twig') }}
+	</div>
+	
+	{{ form.upload_start("inputform", "", "dl-area", base_url~"training/TrainingUpload/", "post") }}
+		{{ form.form_hidden("", "MAX_FILE_SIZE", 3145728) }}
+		<p class="admin-des">研修タイプを選択してテキストをアップロードしてください。<br>
+			※3MB未満</p>
+		{{ main.select_block("sel-area", "研修", 'training_type', training_type_map, training_type) }}
+		<div class="sel-area">
+			{{ form.input_file("up_file") }}
+			{{ form.button("reset", "削除") }}
+		</div>
+		<p class="action">
+			<input type="button" class="btn_regist" value="アップロード" onclick="file_select_check('upload', 'アップロード');">
+		</p>
+	{{ form.form_end }}
+	
+	</div>
+	{{ main.return_list(base_url, "training/TrainingList/") }}
+</div>
+
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

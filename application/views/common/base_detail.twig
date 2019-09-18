@@ -1,0 +1,19 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{% import 'parts/header.twig' as header %}
+
+{{ header.javascript_start }}
+	{% block js %}{% endblock %}
+{{ header.javascript_end }}
+
+{{ main.event_start }}
+
+	{% block main %}{% endblock %}
+	
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

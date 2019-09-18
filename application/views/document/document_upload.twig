@@ -1,0 +1,58 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/header.twig' as header %}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{{ header.javascript_start }}
+	
+	function file_select_check(action, msg) {
+	
+		var category_id = document.inputform.category_id.selectedIndex;
+		
+		if (category_id == 0) {
+			alert("区分を選択してください。");
+			return false;
+		}
+		
+		var file = document.getElementById('up_file').value;
+		if (file == '' || file == undefined) {
+			alert('ファイルが選択されていません。');
+			return false;
+		}
+		sub_module(action, msg);
+	}
+	
+{{ header.javascript_end }}
+
+{{ main.event_start }}
+	
+	{{ form.form_title("文書アップロード") }}
+	
+	<div class="err-area">
+		{{ include('common/err_msg.twig') }}
+	</div>
+	
+	{{ form.upload_start("inputform", "", "dl-area", base_url~"document/DocumentUpload/", "post") }}
+		{{ form.form_hidden("", "MAX_FILE_SIZE", 5242880) }}
+		<p class="admin-des">区分を選択してファイルをアップロードしてください。<br>
+			※5MB未満</p>
+		{{ main.select_block("sel-area", "区分", 'category_id', category_map, category_id) }}
+		<div class="sel-area">
+			{{ form.input_file("up_file") }}
+			{{ form.button("reset", "削除") }}
+		</div>
+		<p class="action">
+			<input type="button" class="btn_regist" value="アップロード" onclick="file_select_check('upload', 'アップロード');">
+		</p>
+	{{ form.form_end }}
+	
+	</div>
+	{{ main.return_list(base_url, "document/DocumentList/") }}
+</div>
+
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

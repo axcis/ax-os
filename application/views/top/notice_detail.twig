@@ -1,0 +1,77 @@
+{% extends('common/base_detail.twig') %}
+
+{% block js %}
+	function event_attention(flg) {
+		var frm = document.inputform;
+		var msg = "";
+		var reason = frm.reason.value;
+		
+		if (flg == 2 && reason == "") {
+			alert('不参加の場合は、理由を記載してください。');
+			return false;
+		}
+		
+		if (reason.length > 50) {
+			alert('理由は50文字以内で記載してください。');
+			return false;
+		}
+		
+		if (flg == 1) {
+			msg = "参加で登録";
+		} else if (flg == 2) {
+			msg = "不参加で登録";
+		}
+		
+		frm.flg.value = flg;
+		
+		sub_module('presence', msg);
+	}
+{% endblock %}
+
+{% block main %}
+
+	{{ form.form_title(notice_name) }}
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>お知らせ内容</h4>
+		<p>{{ notice_detail|nl2br }}</p>
+	</div>
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>掲載日</h4>
+		<p>{{ regist_date|date('Y年n月j日') }}</p>
+	</div>
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>掲載期限</h4>
+		<p>{{ published_date|date('Y年n月j日') }}</p>
+	</div>
+	
+	{% if show_presence_area == '1' %}
+		<div class="event-content">
+			<h4><i class="fa" aria-hidden="true"></i>出欠確認期限</h4>
+			<p>{{ presence_date|date('Y年n月j日') }}</p>
+		</div>
+	{% endif %}
+	
+	</div>
+	
+	{% if show_presence_area == '1' %}
+		<div class="event-list">
+			{{ form.form_title("出欠確認") }}
+			{{ form.form_start("inputform", "", "input-box", base_url~"TopPage/", "post") }}
+				{{ form.form_hidden("", "id", id) }}
+				{{ form.form_hidden("", "flg", flg) }}
+				<dl>
+					<dd style="text-align: center;">{{ form.input_button("presence", "参加", "", "btn_presence", "event_attention(1);") }}
+						{{ form.input_button("absence", "不参加", "", "btn_absence", "event_attention(2);") }}</dd>
+					<dt>{{ form.set_col("理由 ※50文字以内で記載してください。") }}</dt>
+					<dd>{{ form.textarea("reason", 50, 3, reason) }}</dd>
+				</dl>
+			{{ form.form_end }}
+		</div>
+	{% endif %}
+	
+	{{ form.input_button("popup-close", "閉じる", "", "btn_return", "window.close(); return false;") }}
+
+{% endblock %}

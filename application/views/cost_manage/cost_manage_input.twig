@@ -1,0 +1,172 @@
+{% extends('common/base_input.twig') %}
+
+{% block js%}
+
+	let canvas = null;
+	let context = null;
+	let image = null;
+	const reader = new FileReader();
+	let fixFileObject = null;
+	let pdfFlag = false;
+	const pdfImageExtention = "png";
+	
+	$(function() {
+		window.onload = function() {
+			var type = document.inputform.input_type.options[document.inputform.input_type.selectedIndex].value;
+			input_change(type);
+		};
+		$('[name=input_type]').change(function() {
+			var type = $(this).val();
+			input_change(type);
+		});
+		$(".datepicker").datepicker('option', {
+			maxDate: 0
+		});
+		
+		{# プレビューの表示 #}
+		$('form').on('change', 'input[type="file"]', function(e) {
+			createPreview(e);
+		});
+	});
+	
+	//プレビューイメージを生成
+	function createPreview(event) {
+		fixFileObject = null;
+		canvas = document.getElementById("thumbnail");
+		context = canvas.getContext("2d");
+		
+		let fileObject = event.target.files[0];
+		
+		if (typeof fileObject === "undefined") {
+			return;
+		}
+		
+		if (fileObject.type.match(/^(image\/jpeg|image\/png|application\/pdf)$/) === null) {
+			return;
+		}
+		
+		pdfFlag = fileObject.type.match(/^application\/pdf$/) !== null;
+		
+		fixFileObject = fileObject;
+		
+		image = new Image();
+		
+		reader.onload = function(event) {
+			if ( ! pdfFlag) {
+				image.src = event.target.result;// base64
+			} else {
+				pdfjsLib.getDocument(new Uint8Array(event.target.result)).then(pdf => {
+					return pdf.getPage(1);
+				}).then(page => {
+					canvas.style.display = "none";// 読み込み時に下記のサイズで描画されるのでdrawCanvas()まで非表示にしておく
+					// ここで基準となるcanvasサイズが決まるのでscaleは1で読み込んでおく
+					let viewport = page.getViewport(1);
+					canvas.height = viewport.height;
+					canvas.width = viewport.width;
+					
+					let renderContext = {
+						canvasContext: context,
+						viewport: viewport
+					};
+					// Render PDF page and set image
+					return page.render(renderContext);// Promise
+				}).then(() => {
+					return new Promise(resolve => {
+						canvas.toBlob(blob => {
+						resolve(blob);
+						}, "image/" + pdfImageExtention);
+					});
+				}).then(blob => {
+					if(image.src) {
+						const oldSrc = image.src;
+						URL.revokeObjectURL(oldSrc);// createObjectURLで作成したURLを削除
+					}
+					image.src = URL.createObjectURL(blob);
+				}).catch(error => {
+					return;
+				});
+			}
+		}
+		image.onload = function() {
+			drawCanvas();
+		}
+		pdfFlag ? reader.readAsArrayBuffer(fileObject) : reader.readAsDataURL(fileObject);
+	}
+	
+	function drawCanvas() {
+		if (image !== null) {
+			let imageWidth =300;
+			let imageHeight = 300;
+			canvas.width = imageWidth;
+			canvas.height = imageHeight;
+			context.clearRect(0, 0, imageWidth, imageHeight);
+			context.drawImage(image, 0, 0, imageWidth, imageHeight);
+		}
+		if (canvas.style.display === "none") {
+			canvas.style.display = "inherit";
+		}
+	}
+	
+	/**
+	 * 入力項目の制御
+	 */
+	function input_change(type) {
+		
+		var frm = document.inputform;
+		
+		switch (type) {
+			case '1':
+				document.getElementById('traffic_cost_input').style.display = "";
+				document.getElementById('expenses_cost_input').style.display = "none";
+				break;
+			case '2':
+				document.getElementById('traffic_cost_input').style.display = "none";
+				document.getElementById('expenses_cost_input').style.display = "";
+				break;
+		}
+	}
+{% endblock %}
+
+{% block title %}
+	{{ form.form_title("経費"~value) }}
+{% endblock %}
+
+{% block inputform %}
+	{{ form.form_hidden("", "MAX_FILE_SIZE", 3145728) }}
+	<dl>
+		<dt>{{ form.set_col("区分", 1) }}</dt>
+		<dd>{{ form_select('input_type', input_type_map, input_type)|raw }}</dd>
+		<dt>{{ form.set_col("日付", 1) }}</dt>
+		<dd>{{ form.input_date("expenses_ymd", expenses_ymd) }}</dd>
+		<div id="traffic_cost_input">
+			<dt>{{ form.set_col("手段", 1) }}</dt>
+			<dd>{{ form.input("transport", transport, "text") }}</dd>
+			<dt>{{ form.set_col("出発地", 1) }}</dt>
+			<dd>{{ form.input("from_place", from_place, "text") }}</dd>
+			<dt>{{ form.set_col("到着地", 1) }}</dt>
+			<dd>{{ form.input("to_place", to_place, "text") }}</dd>
+		</div>
+		<div id="expenses_cost_input">
+			<dt>{{ form.set_col("支払方法", 1) }}</dt>
+			{{ form.form_hidden("", "pay_type", 1) }}
+			<dd>現金</dd>
+			<dt>{{ form.set_col("内訳", 1) }}</dt>
+			{{ form.form_hidden("", "expenses_type", 10) }}
+			<dd>立替金</dd>
+		</div>
+		<dt>{{ form.set_col("金額", 1) }}</dt>
+		<dd>{{ form.input("cost", cost, "text") }}</dd>
+		<dt>{{ form.set_col("目的", 1) }}</dt>
+		<dd>{{ form.textarea("expenses_detail", 50, 5, expenses_detail) }}</dd>
+		<dt>{{ form.set_col("領収書") }}</dt>
+		<dd>
+			{% if action == 'regist' %}
+				{{ form.input_file("receipt_file") }}
+				<div id="preview"><canvas id="thumbnail" style="display: none;"></canvas></div>
+			{% else %}
+				{{ form.form_hidden("", "receipt_file_name", receipt_file_name) }}
+				{{ receipt_file_name }}
+			{% endif %}
+		</dd>
+	</dl>
+{% endblock %}

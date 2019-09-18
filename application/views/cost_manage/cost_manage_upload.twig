@@ -1,0 +1,142 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/header.twig' as header %}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{{ header.javascript_start }}
+
+	let canvas = null;
+	let context = null;
+	let image = null;
+	const reader = new FileReader();
+	let fixFileObject = null;
+	let pdfFlag = false;
+	const pdfImageExtention = "png";
+
+	$(function() {
+		{# プレビューの表示 #}
+		$('form').on('change', 'input[type="file"]', function(e) {
+			createPreview(e);
+		});
+	});
+	
+	//プレビューイメージを生成
+	function createPreview(event) {
+		fixFileObject = null;
+		canvas = document.getElementById("thumbnail");
+		context = canvas.getContext("2d");
+		
+		let fileObject = event.target.files[0];
+		
+		if (typeof fileObject === "undefined") {
+			return;
+		}
+		
+		if (fileObject.type.match(/^(image\/jpeg|image\/png|application\/pdf)$/) === null) {
+			return;
+		}
+		
+		pdfFlag = fileObject.type.match(/^application\/pdf$/) !== null;
+		
+		fixFileObject = fileObject;
+		
+		image = new Image();
+		
+		reader.onload = function(event) {
+			if ( ! pdfFlag) {
+				image.src = event.target.result;// base64
+			} else {
+				pdfjsLib.getDocument(new Uint8Array(event.target.result)).then(pdf => {
+					return pdf.getPage(1);
+				}).then(page => {
+					canvas.style.display = "none";// 読み込み時に下記のサイズで描画されるのでdrawCanvas()まで非表示にしておく
+					// ここで基準となるcanvasサイズが決まるのでscaleは1で読み込んでおく
+					let viewport = page.getViewport(1);
+					canvas.height = viewport.height;
+					canvas.width = viewport.width;
+					
+					let renderContext = {
+						canvasContext: context,
+						viewport: viewport
+					};
+					// Render PDF page and set image
+					return page.render(renderContext);// Promise
+				}).then(() => {
+					return new Promise(resolve => {
+						canvas.toBlob(blob => {
+						resolve(blob);
+						}, "image/" + pdfImageExtention);
+					});
+				}).then(blob => {
+					if(image.src) {
+						const oldSrc = image.src;
+						URL.revokeObjectURL(oldSrc);// createObjectURLで作成したURLを削除
+					}
+					image.src = URL.createObjectURL(blob);
+				}).catch(error => {
+					return;
+				});
+			}
+		}
+		image.onload = function() {
+			drawCanvas();
+		}
+		pdfFlag ? reader.readAsArrayBuffer(fileObject) : reader.readAsDataURL(fileObject);
+	}
+	
+	function drawCanvas() {
+		if (image !== null) {
+			let imageWidth =200;
+			let imageHeight = 200;
+			canvas.width = imageWidth;
+			canvas.height = imageHeight;
+			context.clearRect(0, 0, imageWidth, imageHeight);
+			context.drawImage(image, 0, 0, imageWidth, imageHeight);
+		}
+		if (canvas.style.display === "none") {
+			canvas.style.display = "inherit";
+		}
+	}
+	
+	function file_select_check(action, msg) {
+	
+		var file = document.getElementById('up_file').value;
+		if (file == '' || file == undefined) {
+			alert('ファイルが選択されていません。');
+			return false;
+		}
+		sub_module(action, msg);
+	}
+{{ header.javascript_end }}
+
+{{ main.event_start }}
+	
+	{{ form.form_title("個別アップロード") }}
+	
+	<div class="err-area">
+		{{ include('common/err_msg.twig') }}
+	</div>
+	
+	{{ form.upload_start("inputform", "", "dl-area", base_url~"cost_manage/CostManageUpload/", "post") }}
+		{{ form.form_hidden("", "MAX_FILE_SIZE", 3145728) }}
+		<p class="admin-des">プルダウンを選択してアップロードを押してください。</p>
+		{{ main.select_block("sel-area", "年月", 'month', month_map, month) }}
+		<div class="sel-area">
+			{{ form.input_file("up_file") }}
+			<div id="preview"><canvas id="thumbnail" style="display: none;"></canvas></div>
+		</div>
+		<p class="action">
+			<input type="button" class="btn_regist" value="アップロード" onclick="file_select_check('upload', 'アップロード');">
+		</p>
+	{{ form.form_end }}
+	
+	</div>
+	{{ main.return_list(base_url, "cost_manage/CostManageList/") }}
+</div>
+
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

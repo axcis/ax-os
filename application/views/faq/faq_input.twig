@@ -1,0 +1,16 @@
+{% extends('common/base_input.twig') %}
+
+{% block title %}
+	{{ form.form_title("FAQ"~value) }}
+{% endblock %}
+
+{% block inputform %}
+	<dl>
+		<dt>{{ form.set_col("タイトル", 1) }}</dt>
+		<dd>{{ form.input("title", title, "text", "", "", 50) }}</dd>
+		<dt>{{ form.set_col("質問内容", 1) }}</dt>
+		<dd>{{ form.textarea("question", 50, 5, question) }}</dd>
+		<dt>{{ form.set_col("回答", 1) }}</dt>
+		<dd>{{ form.textarea("answer", 50, 5, answer) }}</dd>
+	</dl>
+{% endblock %}

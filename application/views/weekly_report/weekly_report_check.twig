@@ -1,0 +1,72 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{% import 'parts/header.twig' as header %}
+
+{{ header.javascript_start }}
+	$(function() {
+		$('[name=search_month]').change(function() {
+			$.ajax({
+				type: "POST",
+				url: "{{ base_url }}weekly_report/WeeklyReportCheck/select/",
+				data: {
+					"month": $(this).val()
+				},
+				success: function(data) {
+					var arr = JSON.parse(data);
+					reWriteTable(arr[0]);
+				}
+			});
+		});
+	});
+	
+	//Listの書き換え
+	function reWriteTable(response) {
+		$("#weeklyreport-count-table-body tr").remove();
+		for (var i=0; i< response.length; i++) {
+			$("#weeklyreport-count-table-body").append(
+				$('<tr>').append(
+					$('<td class="ta-center">').text(response[i]['name'])
+				).append(
+					$('<td class="ta-right">').text(response[i]['count'] + '回')
+				)
+			);
+		}
+		$('#weeklyreport-count-table').responsiveTable();
+	}
+	{{ header.responsive_js("weeklyreport-count-table") }}
+{{ header.javascript_end }}
+
+{{ main.main_start }}
+	
+	<div id="description">
+		<p>週報提出チェック</p>
+	</div>
+	<div id="search-area">
+		<p id="search-area-title">検索</p>
+		<div id="search-area-info">
+			{{ main.select_block("search-col", "提出年月", 'search_month', month_map, search_month) }}
+		</div>
+	</div>
+	<div id="list-area">
+		<div id="weeklyreport-count-table">
+			<table class="list-table tablesorter">
+				{{ include('parts/list_col.twig')}}
+				<tbody id="weeklyreport-count-table-body">
+					<td class="name"></td>
+					<td class="count"></td>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	</div>
+	
+	{{ form.input_button("popup-close", "閉じる", "", "btn_return", "window.close(); return false;") }}
+	
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

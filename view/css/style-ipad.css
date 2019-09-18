@@ -1,0 +1,332 @@
+body{
+	line-height: 1.2;
+	font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', '游ゴシック Medium', 'メイリオ', meiryo, sans-serif;
+	-webkit-text-size-adjust:100%;
+	font-size: 14px;
+	color: #444444;
+	width: 100%;
+}
+
+textarea{
+	font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Hiragino Kaku Gothic ProN', '游ゴシック Medium', 'メイリオ', meiryo, sans-serif;
+	-webkit-text-size-adjust:100%;
+    border-radius: 0;
+}
+
+input[type="text"],
+input[type="submit"],
+input[type="button"],
+select{
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+}
+
+select{
+	padding: 5px 10px 5px 20px;
+    background: #fff;
+	border-radius: 0;
+}
+
+img{
+	width: 100%;
+	height: auto;
+}
+
+#titleBox h1{
+	float: left;
+	color: #fff;
+	font-size: 14px;
+	padding: 6px 0;
+	font-weight: normal;
+	margin: 0;
+}
+
+#side-menu {
+	width: 25%;
+	overflow: auto;
+	left: 0;
+	bottom: 0;
+	z-index: 5;
+	float: left;
+	position: relative;
+}
+
+#nav-input {
+	display: none;
+}
+
+#nav-content {
+	margin: 10% 15%;
+}
+
+.square_btn {
+	width: 150px;
+	font-size: 18px;
+	margin-bottom: 15px;
+}
+
+#description {
+	margin: 20px;
+}
+
+#description p {
+	font-size: 15px;
+}
+
+#main-wrapper {
+	width: 75%;
+	margin: 10px auto;
+	position: relative;
+	right: 0;
+	float: right;
+}
+
+.u-menu li {
+    width: 30%;
+    margin-left: 15px;
+}
+
+.u-menu li:nth-child(2n){
+   margin-right: 0;	
+}
+
+#search-area {
+	margin: 20px;
+}
+
+#search-area-info input {
+	width: 120px;
+}
+
+/* カレンダー */
+#btn_prev,
+#btn_next {
+	height: 30px;
+}
+
+#btn_prev {
+	margin-left: 30px;
+}
+
+#btn_next {
+	margin-right: 30px;
+}
+
+
+
+
+
+
+#logout-contents {
+	float: none;
+	padding: 10px 20px;
+}
+
+#welcome{
+	float: left;
+	margin-right: 20px;
+}
+
+#logout {
+	float: right;
+	margin-right: 5px;
+}
+
+.event-list {
+	width: 90%;
+	max-width: 500px;
+	margin-top: 0;
+}
+
+#popup-search {
+	margin: auto;
+	min-height: 50%;
+	padding: 30 10%;
+}
+
+.menu-area-contents {
+	padding: 5px;
+	font-size: 14px;
+}
+
+.menu-area-contents img{
+	width: 20px;
+}
+
+#select-area input[type=text] {
+	font-size: 12px;
+	height: 30px;
+}
+
+#btn_prev,
+#btn_next {
+	height: 30px;
+}
+
+.list-table {
+	/*min-width: 1000px;*/
+}
+
+.sel-title-o {
+	font-size: 14px;
+}
+
+.sel-title-t {
+	font-size: 14px;
+	margin: 0;
+}
+
+.admin-des {
+	font-size: 12px;
+}
+
+.dl-area select {
+	padding: 0;
+	margin: 0;
+	width: auto;
+	height: 29px;
+	box-sizing: border-box;
+	padding: 0 10px 0 30px;
+}
+
+#search-area select {
+	width: 130px;
+	margin: 0 0 0 10px;
+	padding-top: 0;
+}
+
+.employee-name,
+.work-month{
+	display: inline-block;
+}
+
+/* デザイン修正 */
+
+#title-contents{
+	width: 98%;
+    margin: 0 auto;
+    font-size: 90%;
+}
+
+#logout-contents{
+	float: right;
+	padding: 6px 0;
+}
+
+#header-contents {
+    width: 95%;
+    height: auto;
+    max-height: 80px;
+}
+
+#logo {
+    width: 40%;
+    max-width: 220px;
+}
+
+#logo img{
+	width: 100%;
+}
+
+.menu-area-contents {
+    box-sizing: border-box;
+}
+
+.a-menu li {
+    width: 32%;
+    margin: 0 2% 2% 0;
+}
+
+.a-menu li:nth-child(3n){
+   margin-right: 0;	
+}
+
+#info-msg .use-link{
+	margin-top: 10px;
+}
+
+#info-msg .use-link{
+	background: #4CB5F9;
+	padding: 0;
+	margin-left: 0;
+}
+
+#info-msg a{
+	background: #4CB5F9;
+	padding: .5em;
+	border-width: 5px;
+	display: block;
+	margin: 10px 0;
+}
+
+.event-list h3{
+	font-size: 100%;
+	padding: 0;
+}
+
+.input-box {
+    padding: 20px 20px 0px 20px;
+}
+
+input[type=text],
+input[type=password],
+textarea{
+	padding: 5px;
+}
+
+/* ヘルプページ */
+#help-wrapper{
+	padding: 1em;
+	box-sizing: border-box;
+}
+
+#help-wrapper #nav li {
+    width: 49%;
+    margin: 0 2% 2% 0;
+    float: left;
+    text-align: center;
+}
+
+#help-wrapper #nav li:nth-child(2n){
+	margin-right: 0;
+}
+
+#help-wrapper #nav li:nth-child(3n) {
+    margin-right: 2%;
+}
+
+/* 管理者ページ */
+
+.sel-title-o{
+	width: 60px;
+}
+
+.dl-area {
+    margin: 40px auto 0;
+    width: 100%;
+    text-align: center;
+}
+
+.employee-name{
+	margin-right: 10px;
+}
+
+.work-month{
+	margin-right: 10px;	
+}
+
+/* 調整用 */
+.br-a:after{
+	content: "\A";
+	white-space: pre ;
+}
+
+.br-b:before{
+	content: "\A";
+	white-space: pre ;
+}
+
+.sp-only{
+	display: none;
+}

@@ -1,0 +1,20 @@
+{% extends('common/base_list.twig') %}
+
+{% block title %}
+	社内研修受講一覧
+{% endblock %}
+
+{% block main %}
+	<div id="list-area">
+		<div id="main-area">
+			<table class="menu-area-contents u-menu cf">
+				{% for item in list %}
+					<tr>
+						<td><a href="{{ base_url }}training/TrainingList/select/{{ item.type }}" class="contents_btn">{{ item.btn_name }}</a></td>
+						<td class="detail"><span>{{ item.detail }}</span></td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+{% endblock %}

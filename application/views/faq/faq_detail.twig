@@ -1,0 +1,21 @@
+{% extends('common/base_detail.twig') %}
+
+{% block main %}
+
+	{{ form.form_title(title) }}
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>質問内容</h4>
+		<p>{{ question|nl2br }}</p>
+	</div>
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>回答</h4>
+		<p>{{ answer|nl2br }}</p>
+	</div>
+	
+	</div>
+	
+	{{ form.input_button("popup-close", "閉じる", "", "btn_return", "window.close(); return false;") }}
+
+{% endblock %}

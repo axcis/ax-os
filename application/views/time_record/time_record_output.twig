@@ -1,0 +1,49 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/header.twig' as header %}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{{ header.javascript_start }}
+	function select_check(frm) {
+		
+		var name = frm.employee_id.selectedIndex;
+		
+		if (name == 0) {
+			alert("名前を選択してください。");
+			return false;
+		}
+		
+		frm.submit();
+	}
+{{ header.javascript_end }}
+
+{{ main.event_start }}
+	
+	{{ form.form_title("勤怠出力") }}
+	
+	{{ form.form_start("downloadform", "", "dl-area", base_url~"time_record/TimeRecordOutput/output", "post") }}
+		<p class="admin-des">プルダウンを選択して出力を押してください。</p>
+		{{ main.select_block("sel-area", "提出先", 'scene', scene_map, scene) }}
+		{{ main.select_block("sel-area", "年月", 'month', month_map, month) }}
+		{% if session.user_level == '1' %}
+			{{ main.select_block("sel-area", "社員名", 'employee_id', employee_map, employee_id) }}
+		{% else %}
+			{{ form.form_hidden("", "employee_id", employee_id) }}
+		{% endif %}
+		<p class="action">
+			<input type="button" class="btn_output" value="出力" onclick="select_check(this.form);">
+		</p>
+	{{ form.form_end }}
+	
+	</div>
+	{{ main.return_list(base_url, "time_record/TimeRecordList/") }}
+	</div>
+	
+</div>
+
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

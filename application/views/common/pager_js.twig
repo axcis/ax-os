@@ -1,0 +1,17 @@
+$(function() {
+	$("div.holder").jPages({
+	    containerID : "container",
+	    previous : "←",
+	    next : "→"
+	});
+	
+	$("#per-page select").change(function(){
+		var newPerPage = parseInt( $(this).val() );
+		$("div.holder").jPages("destroy").jPages({
+			containerID   : "container",
+			previous : "←",
+			next : "→",
+			perPage : newPerPage
+		});
+	});
+});

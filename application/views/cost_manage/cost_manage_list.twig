@@ -1,0 +1,69 @@
+{% extends('common/base_list.twig') %}
+
+{% block js %}
+	$(function() {
+		$('[name=search_month]').change(function() {
+			list_display_none();
+		});
+		$('[name=search_input_type]').change(function() {
+			list_display_none();
+		});
+		$('[name=search_employee]').change(function() {
+			list_display_none();
+		});
+	});
+	//一覧を非表示にする
+	function list_display_none() {
+		document.getElementById("list-area").style.display="none";
+	}
+	{{ include('common/pager_js.twig') }}
+	{{ header.responsive_js("costmanage-table") }}
+{% endblock %}
+
+{% block title %}
+	経費一覧
+{% endblock %}
+
+{% block search %}
+	{{ main.select_block("search-col", "年月", 'search_month', month_map, search_month) }}
+	{{ main.select_block("search-col", "区分", 'search_input_type', input_type_map, search_input_type) }}
+	{% if session.user_level == '1' %}
+		{{ main.select_block("search-col", "社員名", 'search_employee', employee_map, search_employee) }}
+	{% endif %}
+{% endblock %}
+
+{% block main %}
+	<div id="list-area">
+		{% if list|length == 0 %}
+			{{ main.info_msg("精算データはありません。")}}
+		{% else %}
+			{{ main.pager_block() }}
+			<div id="costmanage-table">
+				<table class="list-table">
+					{{ include('parts/list_col.twig')}}
+					<tbody id="container">
+						{% for key,item in list %}
+							<tr>
+								{% if session.user_name != '管理者' %}<td class="ta-center"><a href="{{ base_url }}cost_manage/CostManageRegist/modify_input/{{ item.id }}"><i class="far fa-edit" aria-hidden="true"></i></a></td>{% endif %}
+								{% if input_type == '1' %}
+									<td class="ta-center">{{ item.expenses_ymd|date('Y年n月j日') }}</td>
+									<td class="ta-center">{{ item.transport }}</td>
+									<td class="ta-center">{{ item.from_place }}</td>
+									<td class="ta-center">{{ item.to_place }}</td>
+									<td class="ta-center">{{ item.expenses_detail }}</td>
+									<td class="ta-right">{{ item.cost }}</td>
+								{% elseif input_type == '2' %}
+									<td class="ta-center">{{ item.expenses_ymd|date('Y年n月j日') }}</td>
+									<td class="ta-center">{{ item.pay_type }}</td>
+									<td class="ta-center">{{ item.expenses_type }}</td>
+									<td class="ta-center">{{ item.expenses_detail }}</td>
+									<td class="ta-right">{{ item.cost }}</td>
+								{% endif %}
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

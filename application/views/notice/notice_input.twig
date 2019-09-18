@@ -1,0 +1,51 @@
+{% extends('common/base_input.twig') %}
+
+{% block js%}
+	window.onload = function() {
+		var presence_flg = $("[name=presence_chk_flg]").val();
+		list_display(presence_flg);
+	}
+	$(function() {
+		$('select[name="presence_chk_flg"]').change(function() {
+			var flg = $(this).val();
+			list_display(flg);
+		});
+		//過去日付は選択不可
+		$('.datepicker').datepicker( 'option', 'minDate', '0' );
+	});
+	
+	function list_display(flg) {
+		if (flg == '0') {
+			$(".presence").css('display', 'none');
+		} else {
+			$(".presence").css('display', '');
+		}
+	}
+{% endblock %}
+
+{% block title %}
+	{{ form.form_title("お知らせ"~value) }}
+{% endblock %}
+
+{% block inputform %}
+	{{ form.form_hidden("", "work_date", work_date) }}
+	{{ form.form_hidden("", "employee_id", employee_id) }}
+	{{ form.form_hidden("", "scene", scene) }}
+	<dl>
+		<dt>{{ form.set_col("お知らせタイトル", 1) }}</dt>
+		<dd>{{ form.input("notice_name", notice_name, "text", "", "", 30) }}</dd>
+		<dt>{{ form.set_col("詳細", 1) }}</dt>
+		<dd>{{ form.textarea("notice_detail", 50, 10, notice_detail) }}</dd>
+		<dt>{{ form.set_col("重要度", 1) }}</dt>
+		<dd>{{ form_select("important", important_map, important)|raw }}</dd>
+		<dt>{{ form.set_col("掲載期限", 1) }}</dt>
+		<dd>{{ form.input_date("published_date", published_date) }}</dd>
+		<dt>{{ form.set_col("出欠確認", 1) }}</dt>
+		<dd>{{ form_select("presence_chk_flg", presence_type_map, presence_chk_flg)|raw }}</dd>
+		<dt class="presence">{{ form.set_col("出欠確認期限") }}</dt>
+		<dd class="presence">{{ form.input_date("presence_date", presence_date) }}</dd>
+		{% if action == 'regist' %}
+			<dd id="send-all">{{ form_checkbox('send_mail', '1', 'Allにメール送信する', 'send_mail', checked)|raw }}</dd>
+		{% endif %}
+	</dl>
+{% endblock %}

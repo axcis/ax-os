@@ -1,0 +1,49 @@
+{% extends('common/base_list.twig') %}
+
+{% block js %}
+	$(function() {
+		$("table.list-table").tablesorter({
+			headers: {
+				1: { sorter: false },
+				4: { sorter: false }},
+			sortList: [
+				[2,1]
+			]
+		}); 
+	});
+	{{ include('common/pager_js.twig') }}
+	{{ header.responsive_js("notice-table") }}
+{% endblock %}
+
+{% block title %}
+	お知らせ一覧
+{% endblock %}
+
+{% block main %}
+	{# メインメニュー #}
+	<div id="list-area">
+		{% if notice_list|length == 0 %}
+			{{ main.info_msg("お知らせはありません。")}}
+		{% else %}
+			{{ main.pager_block('0') }}
+			<div id="notice-table">
+				<table class="list-table tablesorter">
+					{{ include('parts/list_col.twig')}}
+					<tbody id="container">
+						{% for key,item in notice_list %}
+							<tr {% if item.important == '高' %} class="important-high" {% elseif item.important == '中' %} class="important-middle" {% endif %}>
+								<td class="ta-center">{{ item.notice_name }}</td>
+								<td class="ta-center">{{ item.important }}</td>
+								<td class="ta-center">{{ item.regist_date|date('Y年n月j日') }}</td>
+								<td class="ta-center">{% if item.presence_date != null %}{{ item.presence_date|date('Y年n月j日') }}{% endif %}</td>
+								<td class="ta-center"><input type="button" class="btn_detail" value="詳細" onclick="window.open('{{ base_url }}TopPage/detail/{{ item.id }}', '詳細', 'width=900, height=550, menubar=no, toolbar=no, scrollbars=yes');"></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endif %}
+	</div>
+	
+	{# TODO カレンダー #}
+{% endblock %}

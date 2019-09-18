@@ -1,0 +1,47 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/header.twig' as header %}
+
+{{ header.javascript_start() }}
+	$(function() {
+		$("table.popup-list").tablesorter({
+			headers: {2: { sorter: false }},
+			sortList: [
+				[1,0]
+			]
+		});
+	});
+	{{ header.responsive_js("presence-table") }}
+{{ header.javascript_end() }}
+
+{% import 'parts/main_body.twig' as main %}
+
+{{ main.main_start }}
+	<ul class="menu-area-contents u-menu cf">
+		<input type="button" class="btn_output" value="出力" onclick="sub_redirect('{{ base_url }}notice/NoticeList/', 'excel_output',{{ id }});">
+	</ul>
+
+	<div id="list-area">
+		<div id="presence-table">
+			<table class="popup-list tablesorter">
+				{{ include('parts/list_col.twig')}}
+				<tbody id="container">
+					{% for key,item in list %}
+						<tr>
+							<td class="ta-center">{{ item.name }}</td>
+							<td class="ta-center">{{ item.presence }}</td>
+							<td class="ta-center">{{ item.reason }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	{{ form.input_button("popup-close", "閉じる", "", "btn_return", "window.close(); return false;") }}
+
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

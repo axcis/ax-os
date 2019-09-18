@@ -1,0 +1,32 @@
+{% extends('common/base_input.twig') %}
+
+{% block js%}
+	$(function() {
+		//月曜日以外は選択不可にする
+		$(".datepicker").datepicker('option', {
+			beforeShowDay: function(date){
+				var ret = [(date.getDay() == 1)];
+				return ret;
+			}
+		});
+	});
+{% endblock %}
+
+{% block title %}
+	{{ form.form_title("週報"~value) }}
+{% endblock %}
+
+{% block inputform %}
+	<dl>
+		<dt>{{ form.set_col("報告基準日", 1) }}</dt>
+		<dd>{{ form.input_date("standard_date", standard_date) }}</dd>
+		<dt>{{ form.set_col("参画プロジェクト名", 1) }}</dt>
+		<dd>{{ form.input("project_name", project_name, "text", "", "", 50) }}</dd>
+		<dt>{{ form.set_col("作業内容", 1) }}</dt>
+		<dd>{{ form.textarea("work_content", 50, 5, work_content) }}</dd>
+		<dt>{{ form.set_col("作業に対する疑問/不明点/反省等", 1) }}</dt>
+		<dd>{{ form.textarea("reflect", 50, 5, reflect) }}</dd>
+		<dt>{{ form.set_col("その他") }}</dt>
+		<dd>{{ form.textarea("other", 50, 5, other) }}</dd>
+	</dl>
+{% endblock %}

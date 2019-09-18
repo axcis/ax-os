@@ -1,0 +1,83 @@
+{% macro form_start(form_name, id, class, action, method) %}
+	<form name="{{ form_name }}" {% if id != "" %}id="{{ id }}"{% endif %} {% if class != "" %}class="{{ class }}"{% endif %} action="{{ action }}" method="{{ method }}">
+{% endmacro %}
+
+{% macro upload_start(form_name, id, class, action, method) %}
+	<form name="{{ form_name }}" {% if id != "" %}id="{{ id }}"{% endif %} {% if class != "" %}class="{{ class }}"{% endif %} action="{{ action }}" method="{{ method }}" enctype="multipart/form-data">
+{% endmacro %}
+
+{% macro form_title(title) %}
+	<h3>{{ title }}</h3>
+{% endmacro %}
+
+{% macro form_hidden(id, name, value) %}
+	<input type="hidden" id="{% if id != "" %}{{ id }}{% else %}{{ name }}{% endif %}" name="{{ name }}" value="{{ value }}">
+{% endmacro %}
+
+{% macro login_input(name, value, type, place) %}
+	<input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value }}" placeholder="{{ place }}"></input>
+{% endmacro %}
+
+{% macro login_submit() %}
+	<input type="submit" id="btn_login" title="Sign In" value="ログイン"></input>
+{% endmacro %}
+
+{% macro set_col(name, req) %}
+	{{ name }}{% if req == 1 %}<span class="req">必須</span>{% endif %}
+{% endmacro%}
+
+{% macro input(name, value, type, id, class, size, readonly, placeholder) %}
+	<input type="{{ type|default('text') }}" id="{% if id != "" %}{{ id }}{% else %}{{ name }}{% endif %}" {% if class != "" %}class="{{ class }}"{% endif %} name="{{ name }}" size="{{ size|default(50) }}" value="{{ value }}" {% if readonly == 1 %}readonly{% endif %} {% if placeholder != '' %}placeholder={{ placeholder }}{% endif %}/>
+{% endmacro %}
+
+{% macro input_date(name, value) %}
+	<input class="datepicker" type="text" name="{{ name }}" value="{{ value }}" readonly>
+{% endmacro %}
+
+{% macro input_button(name, value, id, class, onclick) %}
+	<input type="button" id="{% if id != "" %}{{ id }}{% else %}{{ name }}{% endif %}" {% if class != "" %}class="{{ class }}"{% endif %} name="{{ name }}" value="{{ value }}" {% if onclick != "" %}onclick="{{ onclick }}"{% endif %}/>
+{% endmacro %}
+
+{% macro input_file(name) %}
+	<input type="file" id="{{ name }}" name="{{ name }}" size="50" /><br />
+{% endmacro %}
+
+{% macro button(type, name, class) %}
+	<button type="{{ type }}" {% if class != "" %}class="{{ class }}"{% endif %}>{{ name }}</button>
+{% endmacro %}
+
+{% macro search_clear(base_url, con) %}
+	<input type="button" id="clear" class="btn_search_clear" name="clear" value="クリア" onclick="sub_redirect('{{ base_url }}','{{ con }}');">
+{% endmacro %}
+
+{% macro search_submit(base_url, con) %}
+	<div id="search-submit-area">
+		<input type="submit" id="search" name="search" value="検索">
+		<input type="button" id="search" name="search" value="クリア" onclick="sub_redirect('{{ base_url }}','{{ con }}');">
+	</div>
+{% endmacro %}
+
+{% macro textarea(name, cols, rows, value, placeholder) %}
+	<textarea name="{{ name }}" cols={{ cols|default(80) }} rows={{ rows|default(10) }} {% if placeholder != '' %}placeholder={{ placeholder }}{% endif %}>{{ value }}</textarea>
+{% endmacro %}
+
+{% macro label(for, id, class) %}
+	<label for="{{ for }}" {% if id != null %}id="{{ id }}"{% endif %} {% if class != null %}class="{{ class }}"{% endif %}></label>
+{% endmacro %}
+
+{% macro action(action, value, delete_disable) %}
+	<p class="action">
+		<input type="button" class="btn_regist" value="{{ value }}" onclick="sub_module('{{ action }}', '{{ value }}');">
+		{% if action == 'modify' and delete_disable != '1' %}<input type="button" class="btn_delete" value="削除" onclick="sub_module('delete', '削除');">{% endif %}
+	</p>
+{% endmacro %}
+
+{% macro upload_action() %}
+	<p class="action">
+		<input type="button" id="file_upload" class="btn_regist" value="アップロード" onclick="file_select_check('upload', 'アップロード');">
+	</p>
+{% endmacro %}
+
+{% macro form_end() %}
+	</form>
+{% endmacro %}

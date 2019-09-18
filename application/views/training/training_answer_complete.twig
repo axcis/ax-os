@@ -1,0 +1,29 @@
+{% extends('common/base_list.twig') %}
+
+{% block title %}
+	お疲れ様でした
+{% endblock %}
+
+{% block main %}
+	<div id="info-msg">
+		<p>あなたの点数は<span class="point-msg">{{ point }}点</span>です。</p>
+	</div>
+	{% if point != 100 %}
+		<div id="info-msg2">
+			<p><span class="br-as">全問正解になるまで</span>受講終了にはなりません。<br>
+			<span class="br-as">トップページに戻り、</span>もう一度受講して下さい！</p>
+			<div id="msg-robot">
+				<img src="{{ base_url }}view/_images/robot-f200.png" alt="">
+			</div>
+		</div>
+	{% else %}
+		<div id="info-msg2">
+			<p><span class="point-msg end-msg"><span class="br-as">お疲れ様です！</span></span><br>
+				受講終了になります</p>
+			<div id="msg-robot">
+				<img src="{{ base_url }}view/_images/robot200.png" alt="">
+			</div>
+		</div>
+	{% endif %}
+	{{ main.return_list(base_url, class_path~"List") }}
+{% endblock %}

@@ -1,0 +1,4 @@
+{% if session.is_login == "1" %}
+	<p id="welcome">ようこそ {{ session.user_name}} さん <i class="fas fa-user-circle" aria-hidden="true"></i></p>
+	<p id="logout"><a href="{{ base_url }}Logout">ログアウト <i class="fas fa-sign-out-alt" aria-hidden="true"></i></a></p>
+{% endif %}

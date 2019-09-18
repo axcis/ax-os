@@ -1,0 +1,38 @@
+{% macro javascript_start() %}
+	<script type="text/javascript">
+{% endmacro %}
+
+{% macro responsive_js(id) %}
+	$.fn.responsiveTable = (function() {
+		var $window = $(window);
+		return function() {
+			var $el = this;
+			var $table = this.find('>table');
+			var onResize = function() {
+				var width = $table.outerWidth();
+				var height = $table.outerHeight();
+				var $parent = $el.parent();
+				var containerWidth = $parent.width();
+				var ratio = containerWidth / width;
+				if (ratio < 1) {
+					$el.height(height * ratio);
+					$table.css('transform', 'scale(' + ratio + ')');
+				} else {
+					$el.height('');
+					$table.css('transform', '');
+				}
+			};
+			$table.css('transformOrigin', '0 0');
+			$window.on('resize', onResize);
+			onResize();
+		};
+	}());
+	
+	$(function() {
+		$('#{{ id }}').responsiveTable();
+	});
+{% endmacro %}
+
+{% macro javascript_end() %}
+	</script>
+{% endmacro %}

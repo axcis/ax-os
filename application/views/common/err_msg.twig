@@ -1,0 +1,8 @@
+{% import 'parts/main_body.twig' as main %}
+
+{% if err == "1" %}
+	{% for item in err_msg %}
+		<p class="err_msg"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>{{ item }}</p>
+		{{ main.spacer }}
+	{% endfor %}
+{% endif %}

@@ -1,0 +1,64 @@
+{% extends('common/base_list.twig') %}
+
+{% block js%}
+	function sub_send(act, msg) {
+		//ラジオボタンのバリデーションチェック
+		var checked_radio_count = $(".radio_button_wrapper").find('input[type="radio"]:checked').size();
+		var radio_count = $(".radio_button_wrapper").size();
+		
+		if(checked_radio_count != radio_count){
+			alert("未解答の問題があります。");
+			return false;
+		}
+		
+		sub_module(act, msg);
+	}
+{% endblock %}
+
+{% block title %}
+	{{ training_name }}問題
+{% endblock %}
+
+{% block main %}
+	{% if point == 100 %}
+		<div id="info-msg2">
+			<p><span class="br-as">{{ training_name }}は受講済みです。<br>
+			<span class="br-as">受講終了前に</span>この画面が表示された場合は<br>
+			<span class="br-as">管理部まで</span>お問い合せください。</p>
+			<div id="msg-robot">
+				<img src="{{ base_url }}view/_images/robot-f200.png" alt="">
+			</div>
+		</div>
+	{% else %}
+		<div id="info-msg">
+			<p><span class="br-as">テキストをDLして自習を行った後、</span>以下の設問に答えてください</p>
+		</div>
+		<div id="menu-area">
+			<ul class="menu-area-contents u-menu cf">
+				<li><a href="{{ base_url }}training/TrainingList/download/{{ type }}"><i class="far fa-file-alt" aria-hidden="true"></i>テキスト</a></li>
+			</ul>
+		</div>
+		<div id="list-area" class="question_area">
+			<form name="inputform" class="input-box" action="{{ base_url }}training/TrainingList/" method="post">
+				{{ form.form_hidden("", "type", type) }}
+				{% for item in question_list %}
+					<dl>
+						<dt>問題{{ item.id }}</dt>
+						<dd class="question">{{ item.question|nl2br }}</dd>
+						<ul class="radio_button_wrapper">
+							{% for key,value in item.answer_list %}
+								<li>
+									{{ form_radio("answer_list"~item.id~"[]", key, value, "answer_list"~item.id~"_"~key)|raw }}
+								</li>
+							{% endfor %}
+						</ul>
+					</dl>
+				{% endfor %}
+			</form>
+			<p class="action">
+				<input type="button" class="btn_regist" value="解答を完了する" onclick="sub_send('send', '送信');">
+			</p>
+		</div>
+	{% endif %}
+	{{ main.return_list(base_url, class_path~"List") }}
+{% endblock %}

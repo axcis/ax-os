@@ -1,0 +1,85 @@
+body{
+	font-family: Lato, "游ゴシック Medium", "游ゴシック体", "Yu Gothic Medium", YuGothic, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	line-height: 1.4;
+	font-size: 14px;
+	-webkit-text-size-adjust:100%;
+	color: #444444;
+	width: 100%;
+}
+
+input,
+textarea,
+select{
+	font-family: Lato, "游ゴシック Medium", "游ゴシック体", "Yu Gothic Medium", YuGothic, "ヒラギノ角ゴ ProN", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;	
+}
+
+#title-contents{
+	width: 90%;
+	max-width: 1300px;
+	margin: 0 auto;
+}
+
+#titleBox h1{
+	float: left;
+	color: #fff;
+	font-size: 14px;
+	font-weight: normal;
+	padding: 6px 0;
+}
+
+#side-menu {
+	width: 25%;
+	overflow: auto;
+	left: 0;
+	position: relative;
+	bottom: 0;
+	z-index: 5;
+	float: left;
+}
+
+#nav-input {
+	display: none;
+}
+
+#nav-content {
+	margin: 10% 15%;
+}
+
+.square_btn {
+	margin-bottom: 15px;
+}
+
+#main-wrapper {
+	width: 75%;
+	margin: 10px auto;
+	right: 0;
+	float: right;
+	position:relative;
+}
+
+#search-area-info input {
+	width: 200px;
+}
+
+#info-msg{
+	text-align: center;
+}
+
+#menu-area table {
+	margin: 30px 0 80px;
+	overflow: hidden;
+}
+
+#menu-area table tr{
+	float: left;
+	width: 49%;
+	margin-right: 2%;
+}
+
+#menu-area table tr:nth-child(2n){
+	margin-right: 0;
+}
+
+.detail {
+	font-size: 15px;
+}

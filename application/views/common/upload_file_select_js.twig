@@ -1,0 +1,13 @@
+<script type="text/javascript">
+
+function file_select_check(action, msg) {
+	
+	var file = document.getElementById('up_file').value;
+	if (file == '' || file == undefined) {
+		alert('ファイルが選択されていません。');
+		return false;
+	}
+	sub_module(action, msg);
+}
+
+</script>

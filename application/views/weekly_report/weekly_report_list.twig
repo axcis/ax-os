@@ -1,0 +1,55 @@
+{% extends('common/base_list.twig') %}
+
+{% block js %}
+	$(function() {
+		$("table.list-table").tablesorter({
+			headers: {
+				0: { sorter: false },
+				3: { sorter: false }},
+			sortList: [
+				[1,1]
+			]
+		}); 
+	});
+	{{ include('common/pager_js.twig') }}
+	{{ header.responsive_js("weeklyreport-table") }}
+{% endblock %}
+
+{% block title %}
+	週報一覧
+{% endblock %}
+
+{% block search %}
+	{% if employee_search == '1' %}
+		{{ main.select_block("search-col", "氏名", 'search_regist_user_id', employee_map, search_regist_user_id) }}
+	{% endif %}
+	<div class="search-col">
+		<p class="sel-title-o">日付</p>
+		{{ form.input_date("search_date_from", search_date_from) }} ～ {{ form.input_date("search_date_to", search_date_to) }}
+	</div>
+{% endblock %}
+
+{% block main %}
+	<div id="list-area">
+		{% if list|length == 0 %}
+			{{ main.info_msg("データがありません。")}}
+		{% else %}
+			{{ main.pager_block() }}
+			<div id="weeklyreport-table">
+				<table class="list-table tablesorter">
+					{{ include('parts/list_col.twig')}}
+					<tbody id="container">
+						{% for key,item in list %}
+							<tr>
+								<td class="ta-center">{% if item.modifiable == '1' %}<a href="{{ base_url }}weekly_report/WeeklyReportRegist/modify_input/{{ item.id }}"><i class="far fa-edit" aria-hidden="true"></i></a>{% endif %}</td>
+								<td class="ta-center">{{ item.standard_date|date('Y年n月j日') }}</td>
+								<td class="ta-center">{{ item.name }}</td>
+								<td class="ta-center"><input type="button" class="btn_detail" value="詳細" onclick="window.open('{{ base_url }}{{ class_path }}List/detail/{{ item.id }}', '詳細', 'width=900, height=550, menubar=no, toolbar=no, scrollbars=yes');"></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

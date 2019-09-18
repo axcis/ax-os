@@ -1,0 +1,71 @@
+{% extends('common/base_list.twig') %}
+
+{% block js %}
+	function sub_confirm() {
+		var frm = document.inputform;
+		var check_count = $('input[type="checkbox"]:checked').size();
+		var ret = "";
+		
+		if (check_count == 0) {
+			alert("1つ以上選択してください。");
+			return false;
+		}
+		
+		var msg = "削除します。よろしいですか？"
+		if (!window.confirm(msg)) return false;
+		
+		var sel_ele = document.getElementsByName('sel');
+		for (var i = 0; i < sel_ele.length; i++){
+			if (sel_ele[i].checked == true) {
+				if (ret != "") ret += ",";
+				ret += sel_ele[i].value;
+			}
+		}
+		
+		document.getElementById('del_ids').value = ret;
+		
+		frm.submit();
+	}
+	{{ include('common/pager_js.twig') }}
+	{{ header.responsive_js("document-table") }}
+{% endblock %}
+
+{% block title %}
+	社内文書一覧
+{% endblock %}
+
+{% block search %}
+	{{ main.text_block("search-col", "ファイル名", '', 'search_file_name', search_file_name) }}
+	{{ main.select_block("search-col", "区分", 'search_category', category_map, search_category) }}
+{% endblock %}
+
+{% block main %}
+	<div id="list-area">
+		{% if list|length == 0 %}
+			{{ main.info_msg("データがありません。")}}
+		{% else %}
+			{{ main.pager_block() }}
+			<div id="document-table">
+				<table class="list-table">
+					{{ include('parts/list_col.twig')}}
+					<tbody id="container">
+						{% for key,item in list %}
+							<tr>
+								{% if session.user_name == '管理者' %}<td class="ta-center"><input type="checkbox" name="sel" value="{{ item.id }}"></td>{% endif %}
+								<td class="ta-center">{{ item.category_id }}</td>
+								<td class="ta-center">{{ item.file_name }}</td>
+								<td class="ta-center"><input type="button" class="btn_detail" value="ダウンロード" onclick="sub_redirect('{{ base_url }}', 'document/DocumentList', 'download', '{{ item.id }}');"></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endif %}
+	</div>
+	{% if session.user_name == '管理者' %}
+		{{ form.form_start("inputform", "", "", base_url~"document/DocumentList/delete/", "post") }}
+			{{ form.form_hidden("", "del_ids", "") }}
+			<input type="button" class="btn_delete" value="削除" onclick="sub_confirm();">
+		{{ form.form_end }}
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{{ include('common/header.twig') }}
+{% import 'parts/form.twig' as form %}
+
+<body id="front">
+	<header>
+		<div id="titleBox">
+			<div id="title-contents" class="cf">
+				<h1>
+					<span class="site-title">{{ system_name }}</span> | {{ company_name }}
+				</h1>
+			</div>
+		</div>
+	</header>
+		<div id="log-logo">
+			<img alt="{{ company_name }}" src="{{ base_url }}view/_images/login_logo.png">
+		</div>
+	<div class="form-wrapper">
+		{{ include('common/err_msg.twig') }}
+		{{ form.form_start("loginform", "", "login", base_url~"Login/auth", "post") }}
+			<div class="form-item">
+				{{ form.label("login_id") }}
+				{{ form.login_input("login_id", login_id, "text", "ログインID") }}
+			</div>
+			<div class="form-item">
+				{{ form.label("password") }}
+				{{ form.login_input("password", "", "password", "パスワード") }}
+			</div>
+			<div class="button-panel">
+				{{ form.login_submit }}
+			</div>
+		{{ form.form_end }}
+	</div>
+</body>
+
+</html>

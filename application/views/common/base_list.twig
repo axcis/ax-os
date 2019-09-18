@@ -1,0 +1,55 @@
+{# 一覧のbaseテンプレート #}
+{# 一覧画面は基本的にこのテンプレートを継承し、mainに各オリジナルテンプレートの内容を記載すること #}
+
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{% import 'parts/header.twig' as header %}
+
+{{ header.javascript_start }}
+	{% block js %}{% endblock %}
+{{ header.javascript_end }}
+
+{{ main.main_start }}
+	
+	{# サイドメニュー #}
+	{% if side-menu-hidden != '1' %}
+		<div id="side-menu">
+			<div id="nav-drawer">
+				<input id="nav-input" type="checkbox" class="nav-unshown">
+				<label id="nav-open" for="nav-input"><span></span></label>
+				<label class="nav-unshown" id="nav-close" for="nav-input"></label>
+				<div id="nav-content">
+					{% for item in contents_list %}
+						<a href="{{ item.url }}" class="square_btn {% if class_key == item.key %}square_btn_select{% endif %}" {% if item.target == 'blank' %}target="_blank"{% endif %}>{{ item.btn_name }}</a>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	
+	<div id="main-wrapper">
+		<div id="description">
+			<p>{% block title %}{% endblock %}</p>
+		</div>
+		{% if no_search != '1' %}
+			{{ form.form_start("search-form", "", "search-form", base_url~class_path~"List/search/", "post") }}
+				<div id="search-area">
+					<p id="search-area-title">検索</p>
+					<div id="search-area-info">
+						{% block search %}{% endblock %}
+					</div>
+					{{ form.search_submit(base_url, class_path~"List") }}
+				</div>
+			{{ form.form_end }}
+		{% endif %}
+		{{ include('parts/link_area.twig')}}
+		{% block main %}{% endblock %}
+	</div>
+	
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

@@ -1,0 +1,10 @@
+<div id="info-area">
+	<table>
+		{% for key, item in info_list %}
+			<tr>
+				<th>{{ item.title }}
+				<td {% if item.class != '' %}class="{{ item.class }}"{% endif %}>{% if item.date == 1 %}{{ item.value|date('Y年n月j日') }}{% elseif item.br == 1 %}{{ item.value|nl2br }}{% elseif item.raw == 1 %}{{ item.value|raw }}{% else %}{{ item.value }}{% endif %}</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>

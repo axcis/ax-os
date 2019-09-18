@@ -1,0 +1,51 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/header.twig' as header %}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{% if action == 'modify' %}
+	{% set value = "更新" %}
+{% else %}
+	{% set value = "登録" %}
+{% endif %}
+
+{{ main.event_start }}
+	
+	{% block main %}
+	
+		{{ form.form_title("勤怠設定") }}
+		<div class="err-area">
+			{{ include('common/err_msg.twig') }}
+		</div>
+		
+		{{ form.form_start("inputform", "", "input-box", base_url~"time_record/TimeRecordConfig/", "post") }}
+			{{ form.form_hidden("", "action", action) }}
+			{{ form.form_hidden("", "employee_id", employee_id) }}
+			<dl>
+				<dt>{{ form.set_col("出勤時間", 1) }}</dt>
+				<dd>{{ form.input("start_time", start_time, "text", "", "", 50, "", "例)9:00 ") }}</dd>
+				<dt>{{ form.set_col("退勤時間", 1) }}</dt>
+				<dd>{{ form.input("end_time", end_time, "text", "", "", 50, "", "例)18:00 ") }}</dd>
+				<dt>{{ form.set_col("休憩時間", 1) }}</dt>
+				<dd>{{ form.input("break_time", break_time, "text", "", "", 50, "", "例)1:00 ") }}</dd>
+				<dt>{{ form.set_col("深夜休憩", 1) }}</dt>
+				<dd>{{ form.input("midnight_break_time", midnight_break_time, "text", "", "", 50, "", "例)0:00 ") }}</dd>
+				<dt>{{ form.set_col("所定時間", 1) }}</dt>
+				<dd>{{ form.input("prescribed_time", prescribed_time, "text", "", "", 50, "", "例)7:30 ") }}</dd>
+			</dl>
+		{{ form.form_end }}
+		{{ form.action(action, value, '1') }}
+		</div>
+		{{ main.return_list(base_url, "time_record/TimeRecordList/") }}
+		</div>
+	
+	{% endblock %}
+	
+</div>
+
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

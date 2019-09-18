@@ -1,0 +1,80 @@
+{% extends('common/base_input.twig') %}
+
+{% block js%}
+	$(function() {
+		window.onload = function() {
+			var cls = document.inputform.classification.options[document.inputform.classification.selectedIndex].value;
+			input_disabled(cls);
+		};
+		$('[name=classification]').change(function() {
+			var cls = $(this).val();
+			input_disabled(cls);
+		});
+	});
+	
+	/**
+	 * 入力項目の制御
+	 */
+	function input_disabled(cls) {
+		
+		var frm = document.inputform;
+		
+		switch (cls) {
+			case '1':
+			case '2':
+				//出勤系
+				frm["start_time"].disabled = false;
+				frm["end_time"].disabled = false;
+				frm["break_time"].disabled = false;
+				frm["midnight_break_time"].disabled = false;
+				frm["prescribed_time"].disabled = false;
+				break;
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+				//休暇系
+				frm["start_time"].disabled = true;
+				frm["end_time"].disabled = true;
+				frm["break_time"].disabled = true;
+				frm["midnight_break_time"].disabled = true;
+				frm["prescribed_time"].disabled = true;
+				break;
+		}
+	}
+{% endblock %}
+
+{% block title %}
+	{{ form.form_title(work_date|date('Y年n月j日')~"の勤怠"~value) }}
+{% endblock %}
+
+{% block inputform %}
+	{{ form.form_hidden("", "work_date", work_date) }}
+	{{ form.form_hidden("", "employee_id", employee_id) }}
+	{{ form.form_hidden("", "scene", scene) }}
+	<dl>
+		{% if session.user_level == '1' %}
+			<dt>{{ form.set_col("社員名") }}</dt>
+			<dd>{{ employee_name }}</dd>
+			{{ form.form_hidden("", "employee_name", employee_name) }}
+		{% endif %}
+		<dt>{{ form.set_col("提出先", 1) }}</dt>
+		<dd>{{ form_select('scene', scene_map, scene)|raw }}</dd>
+		<dt>{{ form.set_col("区分", 1) }}</dt>
+		<dd>{{ form_select('classification', classification_map, classification)|raw }}</dd>
+		<dt>{{ form.set_col("出勤時間") }}</dt>
+		<dd>{{ form.input("start_time", start_time, "text", "", "", 50, "", "例)9:00 ") }}</dd>
+		<dt>{{ form.set_col("退勤時間") }}</dt>
+		<dd>{{ form.input("end_time", end_time, "text", "", "", 50, "", "例)18:00 ") }}</dd>
+		<dt>{{ form.set_col("休憩時間") }}</dt>
+		<dd>{{ form.input("break_time", break_time, "text", "", "", 50, "", "例)1:00 ") }}</dd>
+		<dt>{{ form.set_col("深夜休憩") }}</dt>
+		<dd>{{ form.input("midnight_break_time", midnight_break_time, "text", "", "", 50, "", "例)0:00 ") }}</dd>
+		<dt>{{ form.set_col("所定時間") }}</dt>
+		<dd>{{ form.input("prescribed_time", prescribed_time, "text", "", "", 50, "", "例)7:30 ") }}</dd>
+		<dt>{{ form.set_col("備考") }}</dt>
+		<dd>{{ form.textarea("remark", 50, 5, remark, "例)私用のため全休") }}</dd>
+	</dl>
+{% endblock %}

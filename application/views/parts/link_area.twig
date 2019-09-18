@@ -1,0 +1,14 @@
+<div id="menu-area">
+	<ul class="menu-area-contents u-menu cf">
+		{% for item in link %}
+			{% if item.popup == '1' %}
+				<li><a href="javascript:void(0);" onclick="window.open('{{ base_url }}{{ item.url }}', '{{ item.value }}', 'width=750, height=500, menubar=no, toolbar=no, scrollbars=yes');">{% if item.class != '' %}<i class="{{ item.class }}" aria-hidden="true"></i>{% endif %}{{ item.value }}</a></li>
+			{% else %}
+				<li><a href="{{ base_url }}{{ item.url }}">{% if item.class != '' %}<i class="{{ item.class }}" aria-hidden="true"></i>{% endif %}{{ item.value }}</a></li>
+			{% endif %}
+		{% endfor %}
+		{% if help == '1' %}
+			<li><a href="javascript:void(0);" onclick="window.open('{{ base_url}}help/IntraHelp', 'ヘルプ', 'width=750, height=500, menubar=no, toolbar=no, scrollbars=yes');"><i class="fa fa-question-circle-o" aria-hidden="true"></i>ヘルプ</a></li>
+		{% endif %}
+	</ul>
+</div>
