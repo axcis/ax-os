@@ -26,6 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config['system_name'] = 'AX-OS(アクオス)';
 $config['company_name'] = '株式会社アクシス';
 $config['base_url'] = 'http://localhost/ax-os/';
+$config['program_env'] = 'localhost';
 
 /*
 |--------------------------------------------------------------------------

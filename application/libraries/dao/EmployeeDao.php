@@ -11,6 +11,7 @@ class EmployeeDao {
 	
 	const COL_ID = 'id';
 	const COL_NAME = 'name';
+	const COL_HIRAGANA = 'hiragana';
 	const COL_LOGIN_ID = 'login_id';
 	const COL_PASSWORD = 'password';
 	const COL_EMAIL_ADDRESS = 'email_address';
