@@ -23,7 +23,7 @@ class DocumentUploadModel extends DocumentBaseModel {
 		if ($_FILES["up_file"]["error"] == 1 || $_FILES["up_file"]["error"] == 2) {
 			//1…php.iniで設定されているupload_max_sizeを超えている場合に返される
 			//2…htmlのhiddenで持っているMAX_FILE_SIZEを超えている場合に返される
-			$msgs[] = $this->lang->line('err_file_bigger', array('3MB'));
+			$msgs[] = $this->lang->line('err_file_bigger', array('5MB'));
 		}
 		
 		if ($before_len != $after_len) {

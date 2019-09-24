@@ -36,6 +36,7 @@ class NoticeRegist extends MY_Controller {
 			$this->set_err_info($msgs);
 			$this->set('important_map', $this->model->get_important_map());
 			$this->set('presence_type_map', $this->model->get_presence_type_map());
+			$this->view('notice/notice_input');
 			return;
 		}
 		
@@ -82,6 +83,7 @@ class NoticeRegist extends MY_Controller {
 			$this->set_err_info($msgs);
 			$this->set('important_map', $this->model->get_important_map());
 			$this->set('presence_type_map', $this->model->get_presence_type_map());
+			$this->view('notice/notice_input');
 			return;
 		}
 		

@@ -34,6 +34,7 @@ class CostManageRegist extends MY_Controller {
 		
 		if ($msgs != null) {
 			$this->set_err_info($msgs);
+			$this->set('upload', '1');
 			$this->set('input_type_map', $this->model->get_input_type_map());
 			$this->view('cost_manage/cost_manage_input');
 			return;
