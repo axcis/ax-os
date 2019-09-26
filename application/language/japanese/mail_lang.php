@@ -4,7 +4,7 @@ $lang['notice_mail_config'] = array(
 		"protocol" => "smtp",
 		"smtp_host" => "sv8606.xserver.jp",
 		"smtp_user" => "system@axcis.co.jp",
-		"smtp_pass" => "axcissys01",
+		"smtp_pass" => "Axcissys01",
 		"smtp_port" => 587,
 		"smtp_timeout" => 10
 );
@@ -45,7 +45,7 @@ $lang['conference_appoint_mail_config'] = array(
 		"protocol" => "smtp",
 		"smtp_host" => "sv8606.xserver.jp",
 		"smtp_user" => "system@axcis.co.jp",
-		"smtp_pass" => "axcissys01",
+		"smtp_pass" => "Axcissys01",
 		"smtp_port" => 587,
 		"smtp_timeout" => 10
 );
