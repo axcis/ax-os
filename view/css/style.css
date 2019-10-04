@@ -1018,6 +1018,12 @@ textarea{
 	vertical-align: top;
 }
 
+.holiday {
+	background-image: none;
+	background: #ee5757;
+	color: #FFFFFF;
+}
+
 #today {
 	background: #d3bfe3;
 	border: 1px solid #c0c0c0;

@@ -8,18 +8,32 @@
 class ConferenceAppointListModel extends ConferenceAppointBaseModel {
 	
 	/**
-	 * カレンダー
+	 * カレンダーの生成
 	 */
-	public function load_calendar() {
+	public function make_calendar() {
 		
-		$config = array();
-		$config['show_next_prev'] = true;
-		$config['next_prev_url'] = base_url(). 'conference/ConferenceAppointList/show/';
+		//カレンダークラスのロード
+		$this->load->model('common/CalendarModel', 'cal');
 		
-		//カレンダーのスタイル
-		$config['template'] = $this->set_calendar_template();
+		//設定・ロード
+		$this->set_config();
+		$this->cal->load_calendar();
 		
-		$this->load->library('calendar', $config);
+		//データ部・セグメント・祝日
+		$this->set_calendar_info();
+		
+		//生成結果を返す
+		return $this->cal->make();
+	}
+	
+	/**
+	 * 設定
+	 */
+	private function set_config() {
+		
+		$this->cal->set_show_next_prev();
+		$this->cal->set_next_prev_url(base_url(). 'conference/ConferenceAppointList/show/');
+		$this->cal->set_template($this->set_calendar_template());
 	}
 	
 	/**
@@ -36,6 +50,7 @@ class ConferenceAppointListModel extends ConferenceAppointBaseModel {
 		$template['cal_row_start'] = '<tr class="week">';
 		$template['week_day_cell'] = '<td class="weekday">{week_day}';
 		$template['cal_cell_start'] = '<td class="day">';
+		$template['cal_cell_start_holiday'] = '<td class="day holiday">';
 		$template['cal_cell_start_today'] = '<td id="today">';
 		$template['cal_cell_content'] = '<p class="day_num">{day}</p><p class="content">{content}';
 		$template['cal_cell_content_today'] = '<p class="day_num">{day}</p><p class="content">{content}';
@@ -44,16 +59,33 @@ class ConferenceAppointListModel extends ConferenceAppointBaseModel {
 	}
 	
 	/**
-	 * カレンダーの詳細設定
+	 * 詳細設定
 	 */
-	public function get_calendar_info() {
+	private function set_calendar_info() {
 		
 		$year = $this->uri->segment(4) == null ? date('Y') : $this->uri->segment(4);
 		$month = $this->uri->segment(5) == null ? date('m') : $this->uri->segment(5);
 		
-		$data = $this->get_conference_appoint_info($year, $month);
+		$this->cal->set_segment($year, $month);
+		$this->cal->set_holiday($this->get_holiday_info($year, $month));
+		$this->cal->set_data($this->get_conference_appoint_info($year, $month));
+	}
+	
+	/**
+	 * 祝日取得
+	 */
+	private function get_holiday_info($year, $month) {
 		
-		return $this->calendar->generate($year, $month, $data);
+		$ym = $year. '-'. $month;
+		
+		$this->set_table(HolidayDao::TABLE_NAME, self::DB_MASTER);
+		
+		$this->add_select(HolidayDao::COL_HOLIDAY_DATE);
+		$this->add_where(HolidayDao::COL_MONTH, $ym);
+		
+		$list = $this->do_select();
+		
+		return $this->list_to_array($list, HolidayDao::COL_HOLIDAY_DATE);
 	}
 	
 	/**

@@ -176,7 +176,8 @@ class CI_Calendar {
 	 * @param	array	the data to be shown in the calendar cells
 	 * @return	string
 	 */
-	public function generate($year = '', $month = '', $data = array())
+// 	public function generate($year = '', $month = '', $data = array())
+	public function generate($year = '', $month = '', $holidays = array(), $data = array())
 	{
 		$local_time = time();
 
@@ -289,7 +290,15 @@ class CI_Calendar {
 			{
 				if ($day > 0 && $day <= $total_days)
 				{
-					$out .= ($is_current_month === TRUE && $day == $cur_day) ? $this->replacements['cal_cell_start_today'] : $this->replacements['cal_cell_start'];
+// 					$out .= ($is_current_month === TRUE && $day == $cur_day) ? $this->replacements['cal_cell_start_today'] : $this->replacements['cal_cell_start'];
+					$target_date = $year. "-". $month. "-". sprintf('%02d', $day);
+					if ($is_current_month === TRUE && $day == $cur_day) {
+						$out .= $this->replacements['cal_cell_start_today'];
+					} elseif (in_array($target_date, $holidays) === TRUE) {
+						$out .= $this->replacements['cal_cell_start_holiday'];
+					} else {
+						$out .= $this->replacements['cal_cell_start'];
+					}
 
 					if (isset($data[$day]))
 					{
@@ -488,6 +497,7 @@ class CI_Calendar {
 			'cal_row_start'				=> '<tr>',
 			'cal_cell_start'			=> '<td>',
 			'cal_cell_start_today'		=> '<td>',
+			'cal_cell_start_holiday'		=> '<td>',
 			'cal_cell_start_other'		=> '<td style="color: #666;">',
 			'cal_cell_content'			=> '<a href="{content}">{day}</a>',
 			'cal_cell_content_today'	=> '<a href="{content}"><strong>{day}</strong></a>',

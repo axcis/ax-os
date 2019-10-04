@@ -13,19 +13,23 @@ class ConferenceAppointList extends MY_Controller {
 	public function index() {
 		
 		$this->load->model('conference/ConferenceAppointListModel', 'model');
+		$this->load->library('dao/HolidayDao');
 		$this->load->library('dao/ConferenceDao');
 		$this->load->library('dao/ConferenceAppointDao');
 		
-		//カレンダーのロード
-		$this->model->load_calendar();
+// 		//カレンダーのロード
+// 		$this->model->load_calendar();
 		
-		//データ部などの詳細設定
-		$calendar_info = $this->model->get_calendar_info();
+// 		//データ部などの詳細設定
+// 		$calendar_info = $this->model->get_calendar_info();
+		
+		//カレンダー生成
+		$calendar = $this->model->make_calendar();
 		
 		//データ取得
 		$this->set('list_col', $this->model->get_list_col());
 		$this->set('link', $this->model->get_link_list());
-		$this->set('calendar', $calendar_info);
+		$this->set('calendar', $calendar);
 		
 		$this->set('class_key', 'conference');
 		$this->set('class_path', 'conference/ConferenceAppoint');
