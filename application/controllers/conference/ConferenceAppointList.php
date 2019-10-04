@@ -17,12 +17,6 @@ class ConferenceAppointList extends MY_Controller {
 		$this->load->library('dao/ConferenceDao');
 		$this->load->library('dao/ConferenceAppointDao');
 		
-// 		//カレンダーのロード
-// 		$this->model->load_calendar();
-		
-// 		//データ部などの詳細設定
-// 		$calendar_info = $this->model->get_calendar_info();
-		
 		//カレンダー生成
 		$calendar = $this->model->make_calendar();
 		
