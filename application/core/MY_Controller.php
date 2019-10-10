@@ -209,18 +209,17 @@ class MY_Controller extends CI_Controller {
 		$list[] = array('btn_name' => '勤怠', 'url' => base_url(). 'time_record/TimeRecordList', 'key' => 'time_record');
 		$list[] = array('btn_name' => '経費', 'url' => base_url(). 'cost_manage/CostManageList', 'key' => 'cost_manage');
 		$list[] = array('btn_name' => '社内研修', 'url' => base_url(). 'training/TrainingList', 'key' => 'training');
-		//TODO 学習サイト
-// 		if ($this->get_session('user_level') > self::LEVEL_ADMINISTRATOR) {
-// 			$list[] = array('btn_name' => '学習', 'url' => 'https://mti.mirai-tasu.com/main', 'target' => 'blank');
-// 		}
+		if ($this->get_session('user_level') > self::LEVEL_ADMINISTRATOR) {
+			$list[] = array('btn_name' => '学習', 'url' => 'https://ati.axcis-sys.com/main', 'target' => 'blank');
+		}
 		$list[] = array('btn_name' => 'FAQ', 'url' => base_url(). 'faq/FaqList', 'key' => 'faq');
 		if ($this->get_session('user_level') == self::LEVEL_ADMINISTRATOR) {
 			$list[] = array('btn_name' => 'お知らせ', 'url' => base_url(). 'notice/NoticeList', 'key' => 'notice');
 		}
 // 		if ($this->get_session('user_level') == self::LEVEL_ADMINISTRATOR) {
-// 			$list[] = array('btn_name' => '休暇申請', 'url' => base_url(). 'vacation/VacationList', 'key' => 'vacation');
+// 			$list[] = array('btn_name' => '有休申請', 'url' => base_url(). 'vacation/VacationtList', 'key' => 'vacation');
 // 		} else {
-// 			$list[] = array('btn_name' => '休暇申請', 'url' => base_url(). 'vacation/VacationRegist', 'key' => 'vacation');
+// 			$list[] = array('btn_name' => '有休申請', 'url' => base_url(). 'vacation/VacationRequestList', 'key' => 'vacation');
 // 		}
 		
 		if ($this->get_session('user_level') <= self::LEVEL_SUB_LEADER) {
