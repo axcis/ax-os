@@ -7,6 +7,20 @@
  */
 class ConferenceAppointRegist extends MY_Controller {
 	
+	/**
+	 * コンストラクタ
+	 */
+	public function __construct() {
+		
+		parent::__construct();
+		
+		if ($this->get_session('user_level') > self::LEVEL_SUB_LEADER) {
+			//メンバーは登録不可
+			$this->session->sess_destroy();
+			redirect('Login');
+		}
+	}
+	
 	public function regist_input() {
 		
 		$this->load->model('conference/ConferenceAppointRegistModel', 'model');

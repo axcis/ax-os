@@ -8,6 +8,20 @@
 class CostManageOutput extends MY_Controller {
 	
 	/**
+	 * コンストラクタ
+	 */
+	public function __construct() {
+		
+		parent::__construct();
+		
+		if ($this->get_session('user_level') == self::LEVEL_ADMINISTRATOR) {
+			//管理権限は出力不可(一括出力で実施)
+			$this->session->sess_destroy();
+			redirect('Login');
+		}
+	}
+	
+	/**
 	 * Index
 	 */
 	public function index() {
