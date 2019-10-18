@@ -57,7 +57,7 @@ select{
 	position:relative;
 }
 
-#search-area-info input {
+#search-area-info input[type=text] {
 	width: 200px;
 }
 

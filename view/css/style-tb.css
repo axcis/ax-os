@@ -95,7 +95,7 @@ img{
 	margin: 20px;
 }
 
-#search-area-info input {
+#search-area-info input[type=text] {
 	width: 120px;
 }
 
@@ -237,6 +237,7 @@ img{
 
 #logo img{
 	width: 100%;
+	margin-bottom: 10px;
 }
 
 .menu-area-contents {
