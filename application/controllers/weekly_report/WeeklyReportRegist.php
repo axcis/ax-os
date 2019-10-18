@@ -7,6 +7,20 @@
  */
 class WeeklyReportRegist extends MY_Controller {
 	
+	/**
+	 * コンストラクタ
+	 */
+	public function __construct() {
+		
+		parent::__construct();
+		
+		if ($this->get_session('user_level') == self::LEVEL_ADMINISTRATOR) {
+			//管理権限は登録不可
+			$this->session->sess_destroy();
+			redirect('Login');
+		}
+	}
+	
 	public function regist_input() {
 		
 		$this->set('action', 'regist');

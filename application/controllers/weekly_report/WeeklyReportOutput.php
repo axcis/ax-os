@@ -8,6 +8,20 @@
 class WeeklyReportOutput extends MY_Controller {
 	
 	/**
+	 * コンストラクタ
+	 */
+	public function __construct() {
+		
+		parent::__construct();
+		
+		if ($this->get_session('user_level') != self::LEVEL_ADMINISTRATOR) {
+			//管理権限以外は出力不可
+			$this->session->sess_destroy();
+			redirect('Login');
+		}
+	}
+	
+	/**
 	 * Index
 	 */
 	public function index() {
