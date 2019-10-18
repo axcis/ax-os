@@ -48,6 +48,7 @@ textarea{
 
 #logo img {
 	width: 220px;
+	margin-top: 10px;
 }
 
 .err-area {
@@ -236,7 +237,6 @@ textarea{
 #search-area-info input {
 	margin: 2px;
 	height: 30px;
-	width: 150px;
 	padding-left: 20px;
 }
 
@@ -291,6 +291,10 @@ textarea{
 #search-submit-area input {
 	width: 100px;
 	height: 30px;
+}
+
+.search-check {
+	margin-left: 20px;
 }
 
 /* ここまで */
@@ -1045,8 +1049,11 @@ button[type=reset] {
 	margin-top: 10px;
 }
 
-
-
+#remains-count-area {
+	margin-left: 20px;
+	font-size: 18px;
+	font-weight: bold;
+}
 
 #copyright{
 	background: #222;

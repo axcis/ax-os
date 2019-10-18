@@ -207,7 +207,7 @@ img{
 	width: 65%;
 }
 
-#search-area-info input {
+#search-area-info input[type=text] {
 	width: 120px;
 }
 
@@ -381,6 +381,7 @@ img{
 
 #logo img{
 	width: 100%;
+	margin-bottom: 10px;
 }
 
 .menu-area-contents {
@@ -396,6 +397,19 @@ img{
    margin-right: 0;	
 }
 
+.btn_regist {
+    width: 25%;
+    margin-left: 10px;
+    font-size: 12px;
+    padding: 0px;
+}
+
+.btn_delete {
+    width: 25%;
+    margin-left: 10px;
+    font-size: 12px;
+    padding: 0px;
+}
 
 
 #info-msg .use-link{
