@@ -14,8 +14,8 @@ class NoticeRegist extends MY_Controller {
 		
 		parent::__construct();
 		
-		if ($this->get_session('user_level') > self::LEVEL_SUB_LEADER) {
-			//メンバーは登録不可
+		if ($this->get_session('user_level') > self::LEVEL_LEADER) {
+			//サブリーダー・メンバーは登録不可
 			$this->session->sess_destroy();
 			redirect('Login');
 		}
