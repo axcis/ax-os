@@ -213,8 +213,10 @@ class MY_Controller extends CI_Controller {
 			$list[] = array('btn_name' => '学習', 'url' => 'https://ati.axcis-sys.com/main', 'target' => 'blank');
 		}
 		$list[] = array('btn_name' => 'FAQ', 'url' => base_url(). 'faq/FaqList', 'key' => 'faq');
-		if ($this->get_session('user_level') <= self::LEVEL_SUB_LEADER) {
+		if ($this->get_session('user_level') <= self::LEVEL_LEADER) {
 			$list[] = array('btn_name' => 'お知らせ', 'url' => base_url(). 'notice/NoticeList', 'key' => 'notice');
+		}
+		if ($this->get_session('user_level') <= self::LEVEL_SUB_LEADER) {
 			$list[] = array('btn_name' => '会議室予約', 'url' => base_url(). 'conference/ConferenceAppointList', 'key' => 'conference');
 		}
 // 		if ($this->get_session('user_level') == self::LEVEL_ADMINISTRATOR) {

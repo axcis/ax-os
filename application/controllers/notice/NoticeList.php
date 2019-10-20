@@ -14,8 +14,8 @@ class NoticeList extends MY_Controller {
 		
 		parent::__construct();
 		
-		if ($this->get_session('user_level') > self::LEVEL_SUB_LEADER) {
-			//メンバーは閲覧不可
+		if ($this->get_session('user_level') > self::LEVEL_LEADER) {
+			//サブリーダー・メンバーは閲覧不可
 			$this->session->sess_destroy();
 			redirect('Login');
 		}
