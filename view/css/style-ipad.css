@@ -83,12 +83,8 @@ img{
 }
 
 .u-menu li {
-    width: 30%;
+    width: 25%;
     margin-left: 15px;
-}
-
-.u-menu li:nth-child(2n){
-   margin-right: 0;	
 }
 
 #search-area {
