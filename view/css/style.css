@@ -1045,6 +1045,14 @@ textarea{
 	margin-left: 5px;
 }
 
+.important-high {
+	background-color: #FFA500;
+}
+
+.important-middle {
+	background-color: #FFFF00;
+}
+
 button[type=reset] {
 	margin-top: 10px;
 }
