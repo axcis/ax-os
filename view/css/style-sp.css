@@ -217,7 +217,7 @@ img{
 }
 
 .list-table {
-	min-width: 650px;
+	min-width: 500px;
 }
 
 .list-table tbody td {
@@ -355,6 +355,13 @@ img{
 
 .employee-name{
 	margin-bottom: 10px;
+}
+
+.tablesorter-default .tablesorter-header,
+.tablesorter-default thead .tablesorter-headerAsc,
+.tablesorter-default thead .tablesorter-headerDesc
+ {
+	background-size: 12px 12px;
 }
 
 /* デザイン修正 */
