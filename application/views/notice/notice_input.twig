@@ -28,9 +28,6 @@
 {% endblock %}
 
 {% block inputform %}
-	{{ form.form_hidden("", "work_date", work_date) }}
-	{{ form.form_hidden("", "employee_id", employee_id) }}
-	{{ form.form_hidden("", "scene", scene) }}
 	<dl>
 		<dt>{{ form.set_col("お知らせタイトル", 1) }}</dt>
 		<dd>{{ form.input("notice_name", notice_name, "text", "", "", 30) }}</dd>
