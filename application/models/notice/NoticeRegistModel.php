@@ -25,8 +25,6 @@ class NoticeRegistModel extends MY_Model {
 	 */
 	public function validation($input) {
 		
-		$msgs = array();
-		
 		$notice_name = $input['notice_name'];
 		$notice_detail = $input['notice_detail'];
 		$published_date = $input['published_date'];
