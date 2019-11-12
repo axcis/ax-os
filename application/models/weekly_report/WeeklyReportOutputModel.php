@@ -1,3 +1,4 @@
+
 <?php
 
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -120,7 +121,7 @@ class WeeklyReportOutputModel extends MY_Model {
 		$this->excel->set_cell_value_A1('A18', $info[WeeklyReportDao::COL_REFLECT]);
 		
 		$this->excel->set_cell_value_A1('A29', 'その他');
-		$this->excel->set_cell_value_A1('A30', $info[WeeklyReportDao::COL_REFLECT]);
+		$this->excel->set_cell_value_A1('A30', $info[WeeklyReportDao::COL_OTHER]);
 	}
 	
 	/**
