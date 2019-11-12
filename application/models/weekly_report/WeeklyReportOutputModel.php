@@ -1,4 +1,3 @@
-
 <?php
 
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
