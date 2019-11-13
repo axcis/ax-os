@@ -61,7 +61,11 @@
 			{{ form.form_hidden("", "employee_name", employee_name) }}
 		{% endif %}
 		<dt>{{ form.set_col("提出先", 1) }}</dt>
-		<dd>{{ form_select('scene', scene_map, scene)|raw }}</dd>
+		{% if action == 'regist' %}
+			<dd>{{ form_select('scene', scene_map, scene)|raw }}</dd>
+		{% else %}
+			<dd>{{ scene_map[scene] }}</dd>
+		{% endif %}
 		<dt>{{ form.set_col("区分", 1) }}</dt>
 		<dd>{{ form_select('classification', classification_map, classification)|raw }}</dd>
 		<dt>{{ form.set_col("出勤時間") }}</dt>
