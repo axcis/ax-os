@@ -25,6 +25,7 @@ appearance: none;
 .input-box input[type="text"],
 .input-box input[type="password"] {
 	width: 100%;
+	font-size: 15px;
 }
 
 select{
