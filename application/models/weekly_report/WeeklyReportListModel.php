@@ -156,5 +156,45 @@ class WeeklyReportListModel extends MY_Model {
 		
 		return $info;
 	}
+	
+	/**
+	 * セッション格納用レポートID
+	 */
+	public function get_report_ids($list) {
+		
+		$ids = '';
+		
+		for ($i = 0; $i < count($list); $i++) {
+			$report_id = $list[$i][WeeklyReportDao::COL_ID];
+			if ($i > 0) {
+				$ids .= ',';
+			}
+			$ids .= $report_id;
+		}
+		
+		return $ids;
+	}
+	
+	/**
+	 * 詳細画面の遷移
+	 */
+	public function get_redirect_id($id, $reverse = '0') {
+		
+		if ($reverse == '1') {
+			$report_ids = array_reverse(explode(',', $this->get_session('report_ids')));
+		} else {
+			$report_ids = explode(',', $this->get_session('report_ids'));
+		}
+		
+		foreach ($report_ids as $key => $now) {
+			next($report_ids);
+			if ($id == $now) {
+				$next_id = (current($report_ids) !== false) ? current($report_ids) : 0;
+				break;
+			}
+		}
+		
+		return $next_id;
+	}
 }
 ?>
