@@ -26,6 +26,14 @@
 	
 	</div>
 	
-	{{ form.input_button("popup-close", "閉じる", "", "btn_return", "window.close(); return false;") }}
+	<div id="redirect-area">
+		{% if prev_report_id != 0 %}
+				<a href="{{ base_url }}weekly_report/WeeklyReportList/detail/{{ prev_report_id }}"><div id="btn_prev">前へ</div></a>
+		{% endif %}
+		{{ form.input_button("popup-close", "閉じる", "", "btn_return", "window.close(); return false;") }}
+		{% if next_report_id != 0 %}
+				<a href="{{ base_url }}weekly_report/WeeklyReportList/detail/{{ next_report_id }}"><div id="btn_next">次へ</div></a>
+		{% endif %}
+	</div>
 
 {% endblock %}

@@ -507,6 +507,37 @@ textarea{
 	background: #C3F78C;
 }
 
+#redirect-area {
+	margin: 20px auto;
+	padding-bottom: 10px;
+	text-align: center;
+	font-size: 18px;
+}
+
+#redirect-area a {
+	color: #fff;
+}
+
+#redirect-area #btn_prev,
+#redirect-area #btn_next {
+	color: #fff;
+	display: inline-block;
+	width: 100px;
+}
+
+#redirect-area #btn_prev{
+	margin-right: 10px;
+}
+
+#redirect-area #btn_next{
+	margin-left: 10px;
+}
+
+#redirect-area #popup-close {
+	display: inline-block;
+	margin-bottom: 0px;
+}
+
 /* 勤怠 */
 .saturday td{
 	background-color: #C8F1FF;

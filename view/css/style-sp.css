@@ -295,8 +295,32 @@ img{
     border-width: 20px 0 0 100px;
 }
 
+#redirect-area {
+	margin: 20px auto;
+	padding-bottom: 10px;
+	text-align: center;
+	font-size: 12px;
+}
 
+#redirect-area #btn_prev,
+#redirect-area #btn_next {
+	color: #fff;
+	display: inline-block;
+	width: 60px;
+}
 
+#redirect-area #btn_prev{
+	margin-right: 5px;
+}
+
+#redirect-area #btn_next{
+	margin-left: 5px;
+}
+
+#redirect-area #popup-close {
+	display: inline-block;
+	margin-bottom: 0px;
+}
 
 #logout-contents {
 	float: none;

@@ -62,6 +62,9 @@ class MY_Controller extends CI_Controller {
 		$this->set('system_name', $this->config->item('system_name'));
 		//会社名
 		$this->set('company_name', $this->config->item('company_name'));
+		
+		$class = $this->router->fetch_class();
+		if (strpos($class, 'WeeklyReport') === false) $this->del_session('report_ids'); //週報以外では不要
 	}
 
 	/**
