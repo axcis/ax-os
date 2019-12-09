@@ -16,6 +16,7 @@ class ExpensesDao {
 	const COL_INPUT_TYPE = 'input_type';
 	const COL_PAY_TYPE = 'pay_type';
 	const COL_EXPENSES_TYPE = 'expenses_type';
+	const COL_ROUND_TRIP_TYPE = 'round_trip_type';
 	const COL_TRANSPORT = 'transport';
 	const COL_FROM_PLACE = 'from_place';
 	const COL_TO_PLACE = 'to_place';

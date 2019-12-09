@@ -104,6 +104,7 @@ class CostManageRegistModel extends CostManageBaseModel {
 		$this->add_select(ExpensesDao::COL_INPUT_TYPE);
 		$this->add_select(ExpensesDao::COL_PAY_TYPE);
 		$this->add_select(ExpensesDao::COL_EXPENSES_TYPE);
+		$this->add_select(ExpensesDao::COL_ROUND_TRIP_TYPE);
 		$this->add_select(ExpensesDao::COL_TRANSPORT);
 		$this->add_select(ExpensesDao::COL_FROM_PLACE);
 		$this->add_select(ExpensesDao::COL_TO_PLACE);
@@ -130,6 +131,7 @@ class CostManageRegistModel extends CostManageBaseModel {
 				$this->add_col_val(ExpensesDao::COL_EXPENSES_YMD, $input['expenses_ymd']);
 				$this->add_col_val(ExpensesDao::COL_REGIST_YM, date('Y-m'));
 				$this->add_col_val(ExpensesDao::COL_INPUT_TYPE, $input['input_type']);
+				$this->add_col_val(ExpensesDao::COL_ROUND_TRIP_TYPE, $input['round_trip_type']);
 				$this->add_col_val(ExpensesDao::COL_TRANSPORT, $input['transport']);
 				$this->add_col_val(ExpensesDao::COL_FROM_PLACE, $input['from_place']);
 				$this->add_col_val(ExpensesDao::COL_TO_PLACE, $input['to_place']);
@@ -183,6 +185,7 @@ class CostManageRegistModel extends CostManageBaseModel {
 				//交通費
 				$this->add_col_val(ExpensesDao::COL_EXPENSES_YMD, $input['expenses_ymd']);
 				$this->add_col_val(ExpensesDao::COL_INPUT_TYPE, $input['input_type']);
+				$this->add_col_val(ExpensesDao::COL_ROUND_TRIP_TYPE, $input['round_trip_type']);
 				$this->add_col_val(ExpensesDao::COL_TRANSPORT, $input['transport']);
 				$this->add_col_val(ExpensesDao::COL_FROM_PLACE, $input['from_place']);
 				$this->add_col_val(ExpensesDao::COL_TO_PLACE, $input['to_place']);

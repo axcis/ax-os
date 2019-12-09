@@ -52,6 +52,17 @@ class CostManageBaseModel extends MY_Model {
 		return $map;
 	}
 	
+	public function get_round_trip_type_map() {
+		
+		$map = array();
+		
+		$map[1] = '片道';
+		$map[2] = '往復';
+		$map[3] = '定期';
+		
+		return $map;
+	}
+	
 	/**
 	 * 年月のマッピング
 	 */

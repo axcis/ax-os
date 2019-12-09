@@ -30,6 +30,7 @@ class CostManageRegist extends MY_Controller {
 		$this->set('upload', '1');
 		
 		$this->set('input_type_map', $this->model->get_input_type_map());
+		$this->set('round_trip_type_map', $this->model->get_round_trip_type_map());
 		
 		$this->view('cost_manage/cost_manage_input');
 	}
@@ -50,6 +51,7 @@ class CostManageRegist extends MY_Controller {
 			$this->set_err_info($msgs);
 			$this->set('upload', '1');
 			$this->set('input_type_map', $this->model->get_input_type_map());
+			$this->set('round_trip_type_map', $this->model->get_round_trip_type_map());
 			$this->view('cost_manage/cost_manage_input');
 			return;
 		}
@@ -81,6 +83,7 @@ class CostManageRegist extends MY_Controller {
 		$this->set('upload', '1');
 		
 		$this->set('input_type_map', $this->model->get_input_type_map());
+		$this->set('round_trip_type_map', $this->model->get_round_trip_type_map());
 		
 		$this->view('cost_manage/cost_manage_input');
 	}
@@ -100,6 +103,7 @@ class CostManageRegist extends MY_Controller {
 		if ($msgs != null) {
 			$this->set_err_info($msgs);
 			$this->set('input_type_map', $this->model->get_input_type_map());
+			$this->set('round_trip_type_map', $this->model->get_round_trip_type_map());
 			$this->view('cost_manage/cost_manage_input');
 			return;
 		}
