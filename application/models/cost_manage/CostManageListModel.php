@@ -20,6 +20,7 @@ class CostManageListModel extends CostManageBaseModel {
 		$this->add_select(ExpensesDao::COL_INPUT_TYPE);
 		$this->add_select(ExpensesDao::COL_PAY_TYPE);
 		$this->add_select(ExpensesDao::COL_EXPENSES_TYPE);
+		$this->add_select(ExpensesDao::COL_ROUND_TRIP_TYPE);
 		$this->add_select(ExpensesDao::COL_TRANSPORT);
 		$this->add_select(ExpensesDao::COL_FROM_PLACE);
 		$this->add_select(ExpensesDao::COL_TO_PLACE);
@@ -36,6 +37,7 @@ class CostManageListModel extends CostManageBaseModel {
 		//変換
 		$pay_type_map = $this->get_pay_type_map();
 		$expenses_type_map = $this->get_expenses_type_map();
+		$round_trip_type_map = $this->get_round_trip_type_map();
 		
 		foreach ($list as &$info) {
 			if ($info['pay_type'] != null) {
@@ -43,6 +45,9 @@ class CostManageListModel extends CostManageBaseModel {
 			}
 			if ($info['expenses_type'] != null) {
 				$info['expenses_type'] = $expenses_type_map[$info['expenses_type']];
+			}
+			if ($info['round_trip_type'] != null) {
+				$info['round_trip_type'] = $round_trip_type_map[$info['round_trip_type']];
 			}
 		}
 		
@@ -65,6 +70,7 @@ class CostManageListModel extends CostManageBaseModel {
 				//交通費
 				$list_col[] = array('width' => 150, 'value' => '日付');
 				$list_col[] = array('width' => 150, 'value' => '手段');
+				$list_col[] = array('width' => 120, 'value' => '往復路');
 				$list_col[] = array('width' => 150, 'value' => '出発地');
 				$list_col[] = array('width' => 150, 'value' => '到着地');
 				$list_col[] = array('width' => 300, 'value' => '目的');
