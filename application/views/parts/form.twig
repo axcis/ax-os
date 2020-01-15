@@ -42,6 +42,10 @@
 	<input type="file" id="{{ name }}" name="{{ name }}" size="50" /><br />
 {% endmacro %}
 
+{% macro input_file_multi(name) %}
+	<input type="file" name="{{ name }}" multiple="multiple" /><br />
+{% endmacro %}
+
 {% macro button(type, name, class) %}
 	<button type="{{ type }}" {% if class != "" %}class="{{ class }}"{% endif %}>{{ name }}</button>
 {% endmacro %}

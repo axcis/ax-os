@@ -1,0 +1,41 @@
+{% extends('common/base_detail.twig') %}
+
+{% block main %}
+
+	{{ form.form_title('ヘルプ') }}
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>コンテンツ内容について</h4>
+		<p>コンテンツ内容には、HTMLタグを指定することができます。<br>
+		指定できるタグは以下です。<br><br>
+		・div<br>
+		・h4<br>
+		・p<br>
+		・img<br><br>
+		実際の出力イメージは、以下よりひな形をダウンロードして確認してください。<br>
+		(フォルダとHTMLを同一場所に解凍し、example.htmlをそのまま開いてください。)<br><br>
+		<i class="fa fa-download" aria-hidden="true"></i><a href="{{ base_url }}ati/AtiContentHelp/download">ひな形ダウンロード</a>
+		</p>
+	</div>
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>課題ファイルについて</h4>
+		<p>課題ファイルはzipにまとめてアップロードしてください。<br>
+		(課題ファイルは学習しているかの指標となるため必須にしています)
+		</p>
+	</div>
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>コンテンツ画像ファイルについて</h4>
+		<p>コンテンツに画像を載せたい場合は、載せたい画像を選択してアップロードしてください。<br>
+		(複数ファイル可)<br>
+		画像の差し替えは、編集画面から行ってください。<br><br>
+		なお、ファイル名が一致しない場合や、画像がない場合は表示されないので注意してください。
+		</p>
+	</div>
+	
+	</div>
+	
+	{{ form.input_button("popup-close", "閉じる", "", "btn_return", "window.close(); return false;") }}
+
+{% endblock %}

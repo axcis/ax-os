@@ -136,5 +136,6 @@ $autoload['model'] = array('time_record/TimeRecordBaseModel',
 										'cost_manage/CostManageBaseModel',
 										'conference/ConferenceAppointBaseModel',
 										'document/DocumentBaseModel',
-										'training/TrainingBaseModel'
+										'training/TrainingBaseModel',
+										'ati/AtiBaseModel'
 );
