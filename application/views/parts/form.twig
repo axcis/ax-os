@@ -1,9 +1,9 @@
 {% macro form_start(form_name, id, class, action, method) %}
-	<form name="{{ form_name }}" {% if id != "" %}id="{{ id }}"{% endif %} {% if class != "" %}class="{{ class }}"{% endif %} action="{{ action }}" method="{{ method }}">
+	<form name="{{ form_name }}" {% if id != "" %}id="{{ id }}"{% endif %} {% if class != "" %}class="{{ class }}"{% endif %} action="{{ action }}" method="{{ method }}" onsubmit="return false;">
 {% endmacro %}
 
 {% macro upload_start(form_name, id, class, action, method) %}
-	<form name="{{ form_name }}" {% if id != "" %}id="{{ id }}"{% endif %} {% if class != "" %}class="{{ class }}"{% endif %} action="{{ action }}" method="{{ method }}" enctype="multipart/form-data">
+	<form name="{{ form_name }}" {% if id != "" %}id="{{ id }}"{% endif %} {% if class != "" %}class="{{ class }}"{% endif %} action="{{ action }}" method="{{ method }}" enctype="multipart/form-data" onsubmit="return false;">
 {% endmacro %}
 
 {% macro form_title(title) %}
