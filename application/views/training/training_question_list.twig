@@ -39,7 +39,7 @@
 			</ul>
 		</div>
 		<div id="list-area" class="question_area">
-			<form name="inputform" class="input-box" action="{{ base_url }}training/TrainingList/" method="post" onsubmit="return false;">
+			<form name="inputform" class="input-box" action="{{ base_url }}training/TrainingList/" method="post">
 				{{ form.form_hidden("", "type", type) }}
 				{% for item in question_list %}
 					<dl>
