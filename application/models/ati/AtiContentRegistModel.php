@@ -67,7 +67,7 @@ class AtiContentRegistModel extends AtiBaseModel {
 		//課題ファイルのチェック
 		if ($act == 'regist') {
 			if ($_FILES["exam_text_file"]["name"] != 'text.zip') {
-				$msgs[] = $this->lang->line('課題ファイルの名前はtext.zipでアップロードしてください。');
+				$msgs[] = '課題ファイルの名前はtext.zipでアップロードしてください。';
 			}
 		}
 		
@@ -80,7 +80,7 @@ class AtiContentRegistModel extends AtiBaseModel {
 				$before_len = mb_strlen($_FILES["content_img_files"]["name"][$i]);
 				$after_len = mb_strlen(mb_convert_encoding($file_name, 'UTF-8', 'SJIS'));
 				if ($before_len != $after_len) {
-					$msgs[] = $this->lang->line('環境依存文字を含むファイル名はアップできません。');
+					$msgs[] = $this->lang->line('err_file_upload_env_character');
 					break;
 				}
 				if ($_FILES["content_img_files"]["error"][$i] == 1 || $_FILES["content_img_files"]["error"][$i] == 2) {
@@ -89,14 +89,14 @@ class AtiContentRegistModel extends AtiBaseModel {
 				}
 				//コンテンツ内に画像ファイル名の文字列が存在するかチェックする
 				if (strpos($content, $file_name) === false) {
-					$msgs[] = $this->lang->line('コンテンツ内に'. $file_name. 'が指定されていません。');
+					$msgs[] = "コンテンツ内に $file_name が指定されていません。";
 					break;
 				}
 				$file_total_size += $_FILES["content_img_files"]['size'][$i];
 			}
 		}
 		
-		if ($file_total_size > 20971520) $msgs[] = $this->lang->line('ファイルの総合計サイズは20MBまでです。');
+		if ($file_total_size > 20971520) $msgs[] = 'ファイルの総合計サイズは20MBまでです。';
 		
 		return $msgs;
 	}
