@@ -1190,6 +1190,7 @@ footer{
 #ati-content-area p {
 	background: url(../_images/topic-back.gif);
 	padding: 10px;
+	margin-bottom: 20px;
 }
 
 #ati-content-area img {
@@ -1206,6 +1207,12 @@ footer{
 	color: #444;
 	font-weight: bold;
 	text-decoration: underline;
+}
+
+#ati-content-area pre {
+	border: 1px solid #ccc;
+	padding: 5px;
+	margin-bottom: 20px;
 }
 
 .cf:after {
