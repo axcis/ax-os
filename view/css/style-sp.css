@@ -55,9 +55,14 @@ img{
 }
 
 /* サイドメニュー */
+#side-menu {
+	height: 20px;
+}
+
 #nav-drawer {
-  position: relative;
-  padding-left: 20px;
+  position: absolute;
+  top: 120px;
+  right: 20px;
 }
 
 /*チェックボックス等は非表示に*/
@@ -110,14 +115,14 @@ img{
     overflow: auto;
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     z-index: 9999;/*最前面に*/
     max-width: 230px;/*最大幅*/
     height: 100%;
     background: #039be5;/*背景色*/
     transition: .3s ease-in-out;/*滑らかに表示*/
     -webkit-transform: translateX(-105%);
-    transform: translateX(-105%);/*左に隠しておく*/
+    transform: translateX(105%);/*右に隠しておく*/
 }
 
 /*チェックが入ったらもろもろ表示*/
@@ -412,7 +417,7 @@ img{
 }
 
 #logo img{
-	width: 100%;
+	width: 100px;
 	margin-bottom: 10px;
 }
 
