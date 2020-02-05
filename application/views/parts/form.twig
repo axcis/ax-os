@@ -57,7 +57,7 @@
 {% macro search_submit(base_url, con) %}
 	<div id="search-submit-area">
 		<input type="submit" id="search" name="search" value="検索">
-		<input type="button" id="search" name="search" value="クリア" onclick="sub_redirect('{{ base_url }}','{{ con }}');">
+		<input type="button" id="search_clear" name="search" value="クリア" onclick="sub_redirect('{{ base_url }}','{{ con }}');">
 	</div>
 {% endmacro %}
 
