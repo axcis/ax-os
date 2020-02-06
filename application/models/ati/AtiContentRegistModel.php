@@ -60,7 +60,7 @@ class AtiContentRegistModel extends AtiBaseModel {
 		if ($msgs != null) return $msgs;
 		
 		//文字数チェック
-		if (mb_strlen(trim($title)) > 100) $msgs[] = $this->lang->line('err_max_length', array($this->lang->line('title'), 100));
+		if (mb_strlen(trim($title)) > 50) $msgs[] = $this->lang->line('err_max_length', array($this->lang->line('title'), 50));
 		
 		if ($msgs != null) return $msgs;
 		
