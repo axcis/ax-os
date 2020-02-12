@@ -112,9 +112,6 @@ class AtiContentRegistModel extends AtiBaseModel {
 		$this->add_col_val(AtiContentDao::COL_CATEGORY_ID, $input['category_id']);
 		$this->add_col_val_str(AtiContentDao::COL_TITLE, $input['title']);
 		$this->add_col_val_str(AtiContentDao::COL_CONTENT, $input['content']);
-		if (isset($_FILES['content_img_files'])) {
-			$this->add_col_val_str(AtiContentDao::COL_CONTENT_IMG_FILES, implode(',', $_FILES['content_img_files']['name']));
-		}
 		
 		return $this->do_insert_get_rows();
 	}
@@ -128,9 +125,6 @@ class AtiContentRegistModel extends AtiBaseModel {
 		
 		$this->add_col_val(AtiContentDao::COL_TITLE, $input['title']);
 		$this->add_col_val(AtiContentDao::COL_CONTENT, $input['content']);
-		if (isset($_FILES['content_img_files'])) {
-			$this->add_col_val(AtiContentDao::COL_CONTENT_IMG_FILES, implode(',', $_FILES['content_img_files']['name']));
-		}
 		
 		$this->add_where(AtiContentDao::COL_CATEGORY_ID, $input['category_id']);
 		$this->add_where(AtiContentDao::COL_ID, $input['id']);
