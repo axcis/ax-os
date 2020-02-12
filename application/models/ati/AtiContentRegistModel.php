@@ -74,7 +74,7 @@ class AtiContentRegistModel extends AtiBaseModel {
 		$file_total_size += $_FILES["exam_text_file"]['size'];
 		
 		//画像ファイル
-		if ($_FILES['content_img_files']["tmp_name"][0] != '') {
+		if ($_FILES['content_img_files']["name"][0] != '') {
 			for($i = 0; $i < count($_FILES["content_img_files"]["name"]); $i++ ){
 				$file_name = mb_convert_encoding($_FILES["content_img_files"]["name"][$i], 'SJIS', 'UTF-8');
 				$before_len = mb_strlen($_FILES["content_img_files"]["name"][$i]);
