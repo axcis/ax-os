@@ -1213,6 +1213,7 @@ footer{
 	border: 1px solid #ccc;
 	padding: 5px;
 	margin-bottom: 20px;
+	white-space: pre-wrap;
 }
 
 .cf:after {
