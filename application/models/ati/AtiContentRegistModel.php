@@ -62,6 +62,9 @@ class AtiContentRegistModel extends AtiBaseModel {
 		//文字数チェック
 		if (mb_strlen(trim($title)) > 50) $msgs[] = $this->lang->line('err_max_length', array($this->lang->line('title'), 50));
 		
+		//シングルクオーテーションの存在チェック
+		if (strpos($content, "'") !== false) $msgs[] = 'シングルクオーテーションはエスケープ変換してください。';
+		
 		if ($msgs != null) return $msgs;
 		
 		//課題ファイルのチェック
