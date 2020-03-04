@@ -42,6 +42,10 @@
 	<input type="file" id="{{ name }}" name="{{ name }}" size="50" /><br />
 {% endmacro %}
 
+{% macro input_file_multi(name) %}
+	<input type="file" name="{{ name }}" multiple="multiple" /><br />
+{% endmacro %}
+
 {% macro button(type, name, class) %}
 	<button type="{{ type }}" {% if class != "" %}class="{{ class }}"{% endif %}>{{ name }}</button>
 {% endmacro %}
@@ -53,7 +57,7 @@
 {% macro search_submit(base_url, con) %}
 	<div id="search-submit-area">
 		<input type="submit" id="search" name="search" value="検索">
-		<input type="button" id="search" name="search" value="クリア" onclick="sub_redirect('{{ base_url }}','{{ con }}');">
+		<input type="button" id="search_clear" name="search" value="クリア" onclick="sub_redirect('{{ base_url }}','{{ con }}');">
 	</div>
 {% endmacro %}
 

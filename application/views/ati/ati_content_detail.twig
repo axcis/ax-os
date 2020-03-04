@@ -1,0 +1,30 @@
+{% extends('common/base_detail.twig') %}
+
+{% block main %}
+
+	{{ form.form_title(title) }}
+	
+	<div id="ati-content-area">
+		{{ content|raw }}
+		<div>
+			<h4>課題</h4>
+			<p>以下より、課題ファイルをダウンロードして、挑戦してみましょう。<br>
+				<a href="{{ base_url }}ati/AtiContentList/download/{{ category_id }}/{{ id }}">課題ファイル<i class="fa fa-download" aria-hidden="true"></i></a><br><br>
+				※課題の提出は管理部(support@axcis.co.jp)までメールで送ってください。
+			</p>
+		</div>
+	</div>
+	
+	</div>
+	
+	<div id="redirect-area">
+		{% if prev_id != 0 %}
+				<a href="{{ base_url }}ati/AtiContentList/detail/{{ category_id }}/{{ prev_id }}"><div id="btn_prev">前へ</div></a>
+		{% endif %}
+		<input type="button" class="btn_return" value="一覧へ戻る" onclick="sub_redirect('{{ base_url }}', 'ati/AtiContentList', 'content_list', '{{ category_id }}');">
+		{% if next_id != 0 %}
+				<a href="{{ base_url }}ati/AtiContentList/detail/{{ category_id }}/{{ next_id }}"><div id="btn_next">次へ</div></a>
+		{% endif %}
+	</div>
+
+{% endblock %}

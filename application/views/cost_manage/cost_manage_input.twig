@@ -139,6 +139,8 @@
 		<dt>{{ form.set_col("日付", 1) }}</dt>
 		<dd>{{ form.input_date("expenses_ymd", expenses_ymd) }}</dd>
 		<div id="traffic_cost_input">
+			<dt>{{ form.set_col("往復路", 1) }}</dt>
+			<dd>{{ form_select('round_trip_type', round_trip_type_map, round_trip_type)|raw }}</dd>
 			<dt>{{ form.set_col("手段", 1) }}</dt>
 			<dd>{{ form.input("transport", transport, "text") }}</dd>
 			<dt>{{ form.set_col("出発地", 1) }}</dt>

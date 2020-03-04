@@ -213,7 +213,7 @@ class MY_Controller extends CI_Controller {
 		$list[] = array('btn_name' => '経費', 'url' => base_url(). 'cost_manage/CostManageList', 'key' => 'cost_manage');
 		$list[] = array('btn_name' => '社内研修', 'url' => base_url(). 'training/TrainingList', 'key' => 'training');
 		if ($this->get_session('user_level') > self::LEVEL_ADMINISTRATOR) {
-			$list[] = array('btn_name' => '学習', 'url' => 'https://ati.axcis-sys.com/main', 'target' => 'blank');
+			$list[] = array('btn_name' => 'Eラーニング', 'url' => base_url(). 'ati/AtiCategoryList', 'key' => 'ati');
 		}
 		$list[] = array('btn_name' => 'FAQ', 'url' => base_url(). 'faq/FaqList', 'key' => 'faq');
 		if ($this->get_session('user_level') <= self::LEVEL_LEADER) {
@@ -222,17 +222,10 @@ class MY_Controller extends CI_Controller {
 		if ($this->get_session('user_level') <= self::LEVEL_SUB_LEADER) {
 			$list[] = array('btn_name' => '会議室予約', 'url' => base_url(). 'conference/ConferenceAppointList', 'key' => 'conference');
 		}
-// 		if ($this->get_session('user_level') == self::LEVEL_ADMINISTRATOR) {
-// 			$list[] = array('btn_name' => '有休申請', 'url' => base_url(). 'vacation/VacationList', 'key' => 'vacation');
-// 		} else {
-// 			$list[] = array('btn_name' => '有休申請', 'url' => base_url(). 'vacation/VacationRequestList', 'key' => 'vacation');
-// 		}
-		
 		$list[] = array('btn_name' => '社内文書', 'url' => base_url(). 'document/DocumentList', 'key' => 'document');
 		if ($this->get_session('user_name') != $this->lang->line('administrator')) {
 			$list[] = array('btn_name' => 'パスワード', 'url' => base_url(). 'password/PasswordModify', 'key' => 'password');
 		}
-// 		$list[] = array('btn_name' => 'ヘルプ', 'url' => base_url(). 'help/Help', 'key' => 'help');
 		
 		return $list;
 	}

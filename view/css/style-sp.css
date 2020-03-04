@@ -55,9 +55,14 @@ img{
 }
 
 /* サイドメニュー */
+#side-menu {
+	height: 20px;
+}
+
 #nav-drawer {
-  position: relative;
-  padding-left: 20px;
+  position: absolute;
+  top: 120px;
+  right: 20px;
 }
 
 /*チェックボックス等は非表示に*/
@@ -110,14 +115,14 @@ img{
     overflow: auto;
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     z-index: 9999;/*最前面に*/
     max-width: 230px;/*最大幅*/
     height: 100%;
     background: #039be5;/*背景色*/
     transition: .3s ease-in-out;/*滑らかに表示*/
     -webkit-transform: translateX(-105%);
-    transform: translateX(-105%);/*左に隠しておく*/
+    transform: translateX(105%);/*右に隠しておく*/
 }
 
 /*チェックが入ったらもろもろ表示*/
@@ -268,8 +273,8 @@ img{
 }
 
 .contents_btn {
-	width: 120px;
-	font-size: 15px;
+	width: 100px;
+	font-size: 12px;
 }
 
 #info-msg2{
@@ -352,7 +357,7 @@ img{
 }
 
 .menu-area-contents tr{
-	margin-bottom: 20px;
+	margin: 10px;
 }
 
 #select-area input[type=text] {
@@ -412,7 +417,7 @@ img{
 }
 
 #logo img{
-	width: 100%;
+	width: 100px;
 	margin-bottom: 10px;
 }
 
@@ -528,6 +533,12 @@ select[name="to_month"]{
 	height: 0px;
 	border: 23px solid;
 	border-color: transparent #F4F4F4 #F4F4F4 transparent;
+}
+
+/* Eラーニング */
+#ati-content-area img {
+	width: 100%;
+	margin-bottom: 20px;
 }
 
 /* 調整用 */

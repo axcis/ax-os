@@ -40,6 +40,7 @@ class CostManageOutputModel extends CostManageBaseModel {
 		$this->add_select(ExpensesDao::COL_INPUT_TYPE);
 		$this->add_select(ExpensesDao::COL_PAY_TYPE);
 		$this->add_select(ExpensesDao::COL_EXPENSES_TYPE);
+		$this->add_select(ExpensesDao::COL_ROUND_TRIP_TYPE);
 		$this->add_select(ExpensesDao::COL_TRANSPORT);
 		$this->add_select(ExpensesDao::COL_FROM_PLACE);
 		$this->add_select(ExpensesDao::COL_TO_PLACE);
@@ -79,7 +80,7 @@ class CostManageOutputModel extends CostManageBaseModel {
 		
 		//合計
 		$total_idx = $list_row_idx + 1;
-		$this->excel->set_cell_value('F'. $total_idx, '=SUM(F6:F'. $list_row_idx. ')');
+		$this->excel->set_cell_value('G'. $total_idx, '=SUM(G6:G'. $list_row_idx. ')');
 		
 		//記入及び注意事項欄‥
 		$this->set_traffic_other_area($month, $name, $total_idx);
@@ -104,9 +105,6 @@ class CostManageOutputModel extends CostManageBaseModel {
 		
 		$this->load->model('common/PHPExcelModel', 'excel');
 		
-		$pay_type_map = $this->get_pay_type_map();
-		$expenses_type_map = $this->get_expenses_type_map();
-		
 		//初期化
 		$this->excel_init('経費精算書');
 		
@@ -117,7 +115,7 @@ class CostManageOutputModel extends CostManageBaseModel {
 		$this->set_expenses_title();
 		
 		//Listの出力
-		$list_row_idx = $this->set_expenses_list_value($list, $pay_type_map, $expenses_type_map);
+		$list_row_idx = $this->set_expenses_list_value($list);
 		
 		//体裁を整えるため、30行目までは罫線を引く
 		if ($list_row_idx < 30) $list_row_idx = 30;
@@ -127,10 +125,10 @@ class CostManageOutputModel extends CostManageBaseModel {
 		$this->excel->set_cell_value('E'. $total_idx, '=SUM(E6:E'. $list_row_idx. ')');
 		
 		//記入及び注意事項欄‥
-		$this->set_expenses_other_area($month, $name, $pay_type_map, $expenses_type_map, $list_row_idx, $total_idx);
+		$this->set_expenses_other_area($month, $name, $list_row_idx, $total_idx);
 		
 		//体裁
-		$this->set_expenses_page_format($pay_type_map, $expenses_type_map, $list_row_idx, $total_idx);
+		$this->set_expenses_page_format($list_row_idx, $total_idx);
 		
 		//横を1ページで収めるようにする
 		$this->excel->set_page_reap(1, 0);
@@ -164,6 +162,7 @@ class CostManageOutputModel extends CostManageBaseModel {
 		
 		$col = 1;
 		$this->excel->set_cell_value_R1C1($col++, 6, '日付');
+		$this->excel->set_cell_value_R1C1($col++, 6, '往復路');
 		$this->excel->set_cell_value_R1C1($col++, 6, '手段');
 		$this->excel->set_cell_value_R1C1($col++, 6, '出発');
 		$this->excel->set_cell_value_R1C1($col++, 6, '到着');
@@ -191,8 +190,10 @@ class CostManageOutputModel extends CostManageBaseModel {
 	 */
 	private function set_traffic_list_value($list) {
 		
+		$round_trip_type_map = $this->get_round_trip_type_map();
+		
 		//出力する項目
-		$out_col = array('expenses_ymd', 'transport', 'from_place', 'to_place', 'expenses_detail', 'cost');
+		$out_col = array('expenses_ymd', 'round_trip_type', 'transport', 'from_place', 'to_place', 'expenses_detail', 'cost');
 		
 		$row_idx = 7;
 		
@@ -204,6 +205,10 @@ class CostManageOutputModel extends CostManageBaseModel {
 				if ($key == 'expenses_ymd') {
 					//日付
 					$value = date('Y年n月j日', strtotime($value));
+				}
+				if ($key == 'round_trip_type') {
+					//往復路区分
+					$value = $round_trip_type_map[$value];
 				}
 				if (in_array($key, $out_col)) {
 					$this->excel->set_cell_value_R1C1($col++, $row_idx, $value);
@@ -218,7 +223,10 @@ class CostManageOutputModel extends CostManageBaseModel {
 	/**
 	 * 経費精算書の一覧出力
 	 */
-	private function set_expenses_list_value($list, $pay_type_map, $expenses_type_map) {
+	private function set_expenses_list_value($list) {
+		
+		$pay_type_map = $this->get_pay_type_map();
+		$expenses_type_map = $this->get_expenses_type_map();
 		
 		//出力する項目
 		$out_col = array('expenses_ymd', 'pay_type', 'expenses_type', 'expenses_detail', 'cost');
@@ -270,14 +278,14 @@ class CostManageOutputModel extends CostManageBaseModel {
 		$this->excel->set_cell_value_A1('B4', date('Y年n月t日', strtotime($month. '-01')));
 		
 		//交通費合計
-		$this->excel->set_cell_value_A1('F2', '交通費合計');
-		$this->excel->set_cell_value('F3', '=F'. $total_idx);
+		$this->excel->set_cell_value_A1('G2', '交通費合計');
+		$this->excel->set_cell_value('G3', '=G'. $total_idx);
 	}
 	
 	/**
 	 * 経費精算書の押印欄等の項目
 	 */
-	private function set_expenses_other_area($month, $name, $pay_type_map, $expenses_type_map, $list_idx, $total_idx) {
+	private function set_expenses_other_area($month, $name, $list_idx, $total_idx) {
 		
 		//氏名
 		$this->excel->set_cell_value_A1('A2', '氏名');
@@ -302,64 +310,65 @@ class CostManageOutputModel extends CostManageBaseModel {
 	private function set_traffic_page_format($list_idx, $total_idx) {
 		
 		//フォントサイズ
-		$this->excel->set_font_size('F3', 18);
-		$this->excel->set_font_size('A7:G'. $list_idx, 9);
+		$this->excel->set_font_size('G3', 18);
+		$this->excel->set_font_size('A7:H'. $list_idx, 9);
 		
 		//Listの罫線
-		$this->excel->set_border('A6:G'. $total_idx, 'all', Border::BORDER_HAIR);
-		$this->excel->set_horizon_align('A6:G6');
-		$this->excel->set_border('A6:G'. $total_idx, 'outer');
-		$this->excel->set_border('A'. $total_idx. ':G'. $total_idx, 'outer');
+		$this->excel->set_border('A6:H'. $total_idx, 'all', Border::BORDER_HAIR);
+		$this->excel->set_horizon_align('A6:H6');
+		$this->excel->set_border('A6:H'. $total_idx, 'outer');
+		$this->excel->set_border('A'. $total_idx. ':H'. $total_idx, 'outer');
 		
 		//タイトル
 		$this->excel->set_font_size('A1', 18);
-		$this->excel->cell_merge('A1:G1');
+		$this->excel->cell_merge('A1:H1');
 		
 		//列幅
 		$this->excel->set_column_width('A', 12);
 		$this->excel->set_column_width('B', 12);
-		$this->excel->set_column_width('C', 15);
+		$this->excel->set_column_width('C', 12);
 		$this->excel->set_column_width('D', 15);
-		$this->excel->set_column_width('E', 35);
-		$this->excel->set_column_width('F', 15);
-		$this->excel->set_column_width('G', 7);
+		$this->excel->set_column_width('E', 15);
+		$this->excel->set_column_width('F', 35);
+		$this->excel->set_column_width('G', 15);
+		$this->excel->set_column_width('H', 7);
 		
 		//結合
 		$this->excel->cell_merge('B2:C2');
 		$this->excel->cell_merge('B3:C3');
 		$this->excel->cell_merge('B4:C4');
-		$this->excel->cell_merge('F2:G2');
-		$this->excel->cell_merge('F3:G4');
+		$this->excel->cell_merge('G2:H2');
+		$this->excel->cell_merge('G3:H4');
 		
 		//罫線
 		$this->excel->set_border('A2:C4');
-		$this->excel->set_border('F2:G4');
+		$this->excel->set_border('G2:H4');
 		
 		//横位置
 		$this->excel->set_horizon_align('A1');
-		$this->excel->set_horizon_align('F2');
-		$this->excel->set_horizon_align('F3');
+		$this->excel->set_horizon_align('G2');
+		$this->excel->set_horizon_align('G3');
 		
 		//縦位置
-		$this->excel->set_vertical_align('A7:G'. $list_idx);
-		$this->excel->set_vertical_align('F3');
-		$this->excel->set_wrap_text('A6:F'. $list_idx);
+		$this->excel->set_vertical_align('A7:H'. $list_idx);
+		$this->excel->set_vertical_align('G3');
+		$this->excel->set_wrap_text('A6:G'. $list_idx);
 		
 		//背景色
 		$this->excel->set_color('A2', 'dbdbdb');
 		$this->excel->set_color('A3', 'dbdbdb');
 		$this->excel->set_color('A4', 'dbdbdb');
-		$this->excel->set_color('F2', 'dbdbdb');
-		$this->excel->set_color('A6:G6', 'dbdbdb');
+		$this->excel->set_color('G2', 'dbdbdb');
+		$this->excel->set_color('A6:H6', 'dbdbdb');
 		
 		//フォーマット
-		$this->excel->set_number_format('F3', '"\"#,##0');
+		$this->excel->set_number_format('G3', '"\"#,##0');
 	}
 	
 	/**
 	 * 経費精算書のフォーマット設定
 	 */
-	private function set_expenses_page_format($pay_type_map, $expenses_type_map, $list_idx, $total_idx) {
+	private function set_expenses_page_format($list_idx, $total_idx) {
 		
 		//フォントサイズ
 		$this->excel->set_font_size('A7:F'. $list_idx, 9);

@@ -1,0 +1,65 @@
+{% extends('common/base_detail.twig') %}
+
+{% block main %}
+
+	{{ form.form_title('ヘルプ') }}
+	
+	<style>
+		.caution-msg {
+			color: #ff0000;
+			font-weight: bold;
+		}
+	</style>
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>コンテンツ内容について</h4>
+		<p>コンテンツ内容は、HTML形式またはテキスト形式で登録することが可能です。<br>
+		テキスト形式で登録した場合、<span class="caution-msg">スタイルは適用されません。</span><br>
+		(登録した文章そのままがコンテンツとして表示されます)<br><br>
+		HTML形式の場合、一部のタグに対してスタイルが適用されます。<br>
+		以下のタグが対象です。<br><br>
+		・div<br>
+		・h4<br>
+		・p<br>
+		・img<br>
+		・span<br>
+		・a<br>
+		・pre、code ※プログラムのコードを表示するときに指定してください。<br><br>
+		imgタグのsrcは掲載する画像の<span class="caution-msg">ファイル名を指定</span>してください。<br>
+		(システム内でPathを変換して表示します)<br><br>
+		実際の出力イメージは、以下よりひな形をダウンロードして確認してください。<br>
+		(フォルダとHTMLを同一場所に解凍し、example.htmlをダブルクリックで開いてください。)<br>
+		※HTMLをテキストなどで開くと、コメントも確認できます<br>
+		<span class="caution-msg">
+			※HTMLタグ以外での "&lt;" や "&gt;" 、" &#039; (シングルクオーテーション)"はエスケープ変換して登録してください！<br>
+			　(登録時にエラーが発生したり、正しく表示されない場合があります。)
+		</span><br><br>
+		<i class="fa fa-download" aria-hidden="true"></i><a href="{{ base_url }}ati/AtiContentHelp/download">ひな形ダウンロード</a>
+		</p>
+	</div>
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>課題ファイルについて</h4>
+		<p>課題ファイルは1つのzipファイルにまとめてアップロードしてください。<br>
+		<span class="caution-msg">ファイル名はtext.zipとしてください。<br>
+		課題ファイルは新規登録時は必須です。</span><br>
+		(学習しているかの指標となるため必須にしています)<br>
+		なお、ファイルを差し替える場合は、編集画面から再度アップロードしてください。
+		</p>
+	</div>
+	
+	<div class="event-content">
+		<h4><i class="fa" aria-hidden="true"></i>コンテンツ画像ファイルについて</h4>
+		<p>HTML形式で登録する場合で、コンテンツに画像を掲載したい場合は、<br>
+		載せたい画像を選択してアップロードしてください。(複数選択可)<br>
+		<span class="caution-msg">ファイル名が一致しない場合や、画像がない場合は表示されない</span>ので注意してください。<br><br>
+		なお、ファイルを差し替える場合は、編集画面から再度アップロードしてください。<br><br>
+		<span class="caution-msg">※課題ファイルと画像ファイルは合わせて20MB以内に収めてください</span>
+		</p>
+	</div>
+	
+	</div>
+	
+	{{ form.input_button("popup-close", "閉じる", "", "btn_return", "window.close(); return false;") }}
+
+{% endblock %}

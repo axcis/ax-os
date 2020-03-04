@@ -1,0 +1,35 @@
+{% extends('common/base_list.twig') %}
+
+{% block js %}
+	{{ header.responsive_js("ati-content-table") }}
+{% endblock %}
+
+{% block title %}
+	{{ category_name }}コンテンツ一覧
+{% endblock %}
+
+{% block main %}
+	<div id="list-area">
+		{% if list|length == 0 %}
+			{{ main.info_msg("コンテンツはありません。")}}
+		{% else %}
+			{{ main.info_msg(category_name~"をマスターしよう！")}}
+			<div id="ati-content-table">
+				<table class="list-table tablesorter">
+					{{ include('parts/list_col.twig')}}
+					<tbody id="container">
+						{% for key,item in list %}
+							<tr>
+								<td class="ta-center">{% if modifiable == '1' %}<a href="{{ base_url }}ati/AtiContentRegist/modify_input/{{ category_id }}/{{ item.id }}"><i class="far fa-edit" aria-hidden="true"></i></a>{% endif %}</td>
+								<td class="ta-center">{{ item.id }}</td>
+								<td class="ta-center">{{ item.title}}</td>
+								<td class="ta-center"><input type="button" class="btn_detail" value="詳細" onclick="sub_redirect('{{ base_url }}', 'ati/AtiContentList', 'detail', '{{ category_id }}/{{ item.id }}');"></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endif %}
+	</div>
+	{{ main.return_list(base_url, "ati/AtiCategoryList") }}
+{% endblock %}

@@ -12,7 +12,9 @@
 	</div>
 	<div id="header-contents" class="cf">
 		<div id="logo">
-			<img alt="{{ company_name }}" src="{{ base_url }}view/_images/logo.png?20191101">
+			{% if popup != "1"%}<a href="{{ base_url }}TopPage">{% endif %}
+				<img alt="{{ company_name }}" src="{{ base_url }}view/_images/logo.png?20191101">
+			{% if popup != "1"%}</a>{% endif %}
 		</div>
 	</div>
 </header>

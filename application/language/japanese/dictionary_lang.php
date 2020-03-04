@@ -64,4 +64,8 @@ $lang['new_password'] = "新パスワード";
 $lang['new_password_confirm'] = "新パスワード(確認用)";
 
 $lang['file_name'] = "ファイル名";
+
+//Eラーニング
+$lang['content'] = "コンテンツ内容";
+$lang['exam_text_file'] = "課題ファイル";
 ?>

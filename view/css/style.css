@@ -533,7 +533,8 @@ textarea{
 	margin-left: 10px;
 }
 
-#redirect-area #popup-close {
+#redirect-area #popup-close,
+#redirect-area .btn_return {
 	display: inline-block;
 	margin-bottom: 0px;
 }
@@ -1177,6 +1178,42 @@ footer{
 
 .tablesorter-default thead .sorter-false {
 	background-image: none;
+}
+
+/* Eラーニング */
+#ati-content-area div{
+	background: #fff;
+	padding: 2em 2em 2em;
+	border-bottom: dotted 1px #ccc;
+}
+
+#ati-content-area p {
+	background: url(../_images/topic-back.gif);
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+#ati-content-area img {
+	width: 100%;
+	margin-bottom: 20px;
+}
+
+#ati-content-area span {
+	color: #ff0000;
+	font-weight: bold;
+}
+
+#ati-content-area a {
+	color: #444;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#ati-content-area pre {
+	border: 1px solid #ccc;
+	padding: 5px;
+	margin-bottom: 20px;
+	white-space: pre-wrap;
 }
 
 .cf:after {

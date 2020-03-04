@@ -1,0 +1,63 @@
+{% extends('common/base_input.twig') %}
+
+{% block js %}
+
+	function file_select_check(action, msg) {
+		
+		var file = document.getElementById('exam_text_file').value;
+		if (action == 'regist') {
+			if (file == '' || file == undefined) {
+				alert('課題ファイルが選択されていません。');
+				return false;
+			}
+		}
+		sub_module(action, msg);
+	}
+	
+{% endblock %}
+
+{% block main %}
+	
+	{{ form.form_title(category_name~"コンテンツ"~value) }}
+	<div class="err-area">
+		{{ include('common/err_msg.twig') }}
+	</div>
+	
+	{{ form.upload_start("inputform", "", "input-box", base_url~"ati/AtiContentRegist/", "post") }}
+		{{ form.form_hidden("", "id", id) }}
+		{{ form.form_hidden("", "category_id", category_id)}}
+		{{ form.form_hidden("", "category_name", category_name)}}
+		{{ form.form_hidden("", "action", action) }}
+		{{ form.form_hidden("", "MAX_FILE_SIZE", 20971520) }}
+		<dl>
+			<dt>{{ form.set_col("タイトル", 1) }}</dt>
+			<dd>{{ form.input("title", title, "text", "", "", 50) }}</dd>
+			<dt>{{ form.set_col("コンテンツ内容", 1) }}
+				<a href="javascript:void(0);" onclick="window.open('{{ base_url }}ati/AtiContentHelp', 'ヘルプ', 'width=900, height=550, menubar=no, toolbar=no, scrollbars=yes');""><i class="far fa-question-circle" aria-hidden="true"></i></a>
+			</dt>
+			<dd>{{ form.textarea("content", 50, 40, content) }}</dd>
+			<dt>{{ form.set_col("課題ファイル", 1) }}
+				<a href="javascript:void(0);" onclick="window.open('{{ base_url }}ati/AtiContentHelp', 'ヘルプ', 'width=900, height=550, menubar=no, toolbar=no, scrollbars=yes');""><i class="far fa-question-circle" aria-hidden="true"></i></a>
+			</dt>
+			<dd>
+				{{ form.input_file("exam_text_file") }}
+			</dd>
+			<dt>{{ form.set_col("コンテンツ画像ファイル") }}
+				<a href="javascript:void(0);" onclick="window.open('{{ base_url }}ati/AtiContentHelp', 'ヘルプ', 'width=900, height=550, menubar=no, toolbar=no, scrollbars=yes');""><i class="far fa-question-circle" aria-hidden="true"></i></a>
+			</dt>
+			<dd>
+				{{ form.input_file_multi("content_img_files[]") }}
+			</dd>
+		</dl>
+	{{ form.form_end }}
+	<p class="action">
+		<input type="button" class="btn_regist" value="{{ value }}" onclick="file_select_check('{{ action }}', '{{ value }}');">
+	</p>
+	</div>
+	{{ main.return_list(base_url, "ati/AtiContentList/content_list/"~category_id) }}
+	<p class="action">
+		<input type="button" class="btn_return" value="カテゴリ一覧へ戻る" onclick="sub_redirect('{{ base_url }}','ati/AtiCategoryList');">
+	</p>
+	</div>
+
+{% endblock %}
