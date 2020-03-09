@@ -266,7 +266,7 @@ class CostManageBulkOutputModel extends CostManageBaseModel {
 					//日付
 					$value = date('Y年n月j日', strtotime($value));
 				}
-				if ($key == 'round_trip_type') {
+				if ($key == 'round_trip_type' && $value != null) {
 					//往復路区分
 					$value = $round_trip_type_map[$value];
 				}
