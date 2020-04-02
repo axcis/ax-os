@@ -769,7 +769,7 @@ textarea{
 #info-msg p{
 	padding: 1em 1.5em;
 	border: solid 3px #4CB5F9;
-	margin-bottom: 20px;
+	margin: 20px;
 	display: inline-block;
 	font-weight: bold;
 	color: #0b84d2;
@@ -1214,6 +1214,23 @@ footer{
 	padding: 5px;
 	margin-bottom: 20px;
 	white-space: pre-wrap;
+}
+
+/* 給料明細 */
+.salary-detail-title {
+	margin: 10px;
+	background: #ccc;
+	font-size: 19px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.bulk-error {
+	background-color: #FFA500;
+}
+
+#main-list {
+	margin: 20px;
 }
 
 .cf:after {

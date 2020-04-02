@@ -1,0 +1,32 @@
+{% extends('common/base_list.twig') %}
+{% import 'parts/main_body.twig' as main %}
+{% import 'parts/header.twig' as header %}
+
+{% block js %}
+	{{ include('common/pager_js.twig') }}
+	{{ header.responsive_js("salary-detail-table") }}
+{% endblock %}
+
+{% block title %}
+	給料明細一覧
+{% endblock %}
+
+{% block main %}
+	<div id="list-area">
+		{{ main.pager_block() }}
+		<div id="salary-detail-table">
+			<table class="list-table tablesorter">
+				{{ include('parts/list_col.twig')}}
+				<tbody id="container">
+					{% for key,item in list %}
+						<tr>
+							<td class="ta-center">{{ item.supply_ym|date('Y年n月') }}分</td>
+							<td class="ta-center">{{ item.employee_name }}</td>
+							<td class="ta-center"><input type="button" class="btn_detail" value="詳細" onclick="window.open('{{ base_url }}{{ class_path }}List/detail/{{ item.supply_ym }}', '詳細', 'width=900, height=550, menubar=no, toolbar=no, scrollbars=yes');"></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

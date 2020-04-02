@@ -215,6 +215,12 @@ class MY_Controller extends CI_Controller {
 		if ($this->get_session('user_level') > self::LEVEL_ADMINISTRATOR) {
 			$list[] = array('btn_name' => 'Eラーニング', 'url' => base_url(). 'ati/AtiCategoryList', 'key' => 'ati');
 		}
+		//TODO: 給料明細ペーパーレス
+		if ($this->get_session('user_name') == $this->lang->line('administrator')) {
+			$list[] = array('btn_name' => '給料明細', 'url' => base_url(). 'salary/SalaryDetailRegist', 'key' => 'salary');
+		} else {
+			$list[] = array('btn_name' => '給料明細', 'url' => base_url(). 'salary/SalaryDetailList', 'key' => 'salary');
+		}
 		$list[] = array('btn_name' => 'FAQ', 'url' => base_url(). 'faq/FaqList', 'key' => 'faq');
 		if ($this->get_session('user_level') <= self::LEVEL_LEADER) {
 			$list[] = array('btn_name' => 'お知らせ', 'url' => base_url(). 'notice/NoticeList', 'key' => 'notice');

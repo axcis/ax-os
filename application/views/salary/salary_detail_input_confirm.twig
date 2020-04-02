@@ -1,0 +1,64 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{% import 'parts/header.twig' as header %}
+
+{{ header.javascript_start }}
+	
+	function sub_regist() {
+		
+		var frm = document.inputform;
+		var data = [];
+		
+		var msg = "登録します。よろしいですか？";
+		if (!window.confirm(msg)) return false;
+		
+		$("table.list-table tbody tr").each(function(i) {
+			data[i] = [];
+			$('td', $(this)).each(function(j) {
+				data[i][j] = $(this).text();
+			});
+		});
+		
+		document.getElementById('csv_data').value = JSON.stringify(data);
+		
+		frm.submit();
+	}
+	
+{{ header.javascript_end }}
+
+<div id="main-list">
+	<div id="description">
+		<p>給料明細データ登録確認</p>
+	</div>
+	{% if err == '1' %}
+		{{ main.info_msg("エラーデータがあります。")}}
+	{% else %}
+		{{ form.form_start("inputform", "", "", base_url~"salary/SalaryDetailRegist/regist/", "post") }}
+			{{ form.form_hidden("", "csv_data", "") }}
+			<input type="button" class="btn_regist" value="登録" onclick="sub_regist();">
+		{{ form.form_end }}
+	{% endif %}
+	<div id="list-area">
+		<div id="salary-regist-table">
+			<table class="list-table">
+				{{ include('parts/list_col.twig')}}
+				<tbody id="container">
+					{% for item in data %}
+						<tr {% if item[18] != '' %}class="bulk-error"{% endif %}>
+							{% for i in 0..18 %}
+								<td class="ta-center">{{ item[i] }}</td>
+							{% endfor %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{{ main.return_list(base_url, "salary/SalaryDetailRegist/") }}
+</div>
+
+{{ include('common/footer.twig') }}

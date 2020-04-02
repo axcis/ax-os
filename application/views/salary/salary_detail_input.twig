@@ -1,0 +1,49 @@
+{{ include('common/header.twig') }}
+{{ include('common/body_header.twig') }}
+
+{% import 'parts/header.twig' as header %}
+
+{% import 'parts/form.twig' as form %}
+{% import 'parts/main_body.twig' as main %}
+
+{{ header.javascript_start }}
+	
+	function file_select_check(action, msg) {
+	
+		var file = document.getElementById('up_file').value;
+		if (file == '' || file == undefined) {
+			alert('ファイルが選択されていません。');
+			return false;
+		}
+		sub_module(action, msg);
+	}
+	
+{{ header.javascript_end }}
+
+{{ main.event_start }}
+	
+	{{ form.form_title("給料明細登録") }}
+	
+	<div class="err-area">
+		{{ include('common/err_msg.twig') }}
+	</div>
+	
+	{{ form.upload_start("inputform", "", "dl-area", base_url~"salary/SalaryDetailRegist/", "post") }}
+		{{ form.form_hidden("", "MAX_FILE_SIZE", 5242880) }}
+		<p class="admin-des">明細データを選択してください。 ※5MB未満</p>
+		<div class="sel-area">
+			{{ form.input_file("up_file") }}
+			{{ form.button("reset", "削除") }}
+		</div>
+		<p class="action">
+			<input type="button" class="btn_regist" value="登録" onclick="file_select_check('confirm', '確認画面へ移動');">
+		</p>
+	{{ form.form_end }}
+	
+	</div>
+	{{ main.return_top(base_url) }}
+	</div>
+
+{{ main.main_end }}
+
+{{ include('common/footer.twig') }}

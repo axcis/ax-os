@@ -37,6 +37,7 @@ class LoginModel extends MY_Model {
 		
 		$this->add_select_as(EmployeeDao::COL_ID, 'user_id');
 		$this->add_select_as(EmployeeDao::COL_NAME, 'user_name');
+		$this->add_select(EmployeeDao::COL_EMPLOYEE_NO);
 		$this->add_select(EmployeeDao::COL_LOGIN_ID);
 		$this->add_select(EmployeeDao::COL_PASSWORD);
 		$this->add_select(EmployeeDao::COL_USER_LEVEL);

@@ -68,4 +68,23 @@ $lang['file_name'] = "ファイル名";
 //Eラーニング
 $lang['content'] = "コンテンツ内容";
 $lang['exam_text_file'] = "課題ファイル";
+
+//給料明細
+$lang['supply_ym'] = "支給月";
+$lang['employee_no'] = "社員番号";
+$lang['basic_salary'] = "基本給";
+$lang['non_contract_allowance'] = "契約外手当";
+$lang['technical_allowance'] = "技術手当";
+$lang['dispatch_allowance'] = "出向手当";
+$lang['full_service_allowance'] = "皆勤手当";
+$lang['qualification_allowance'] = "資格手当";
+$lang['other_allowance'] = "その他手当";
+$lang['traffic_cost'] = "交通費";
+$lang['expenses_cost'] = "立替金";
+$lang['health_insurance_premium'] = "健康保険料";
+$lang['nursing_care_premium'] = "介護保険料";
+$lang['employee_pension'] = "厚生年金";
+$lang['employement_insurance'] = "雇用保険";
+$lang['income_tax'] = "所得税";
+$lang['resident_tax'] = "住民税";
 ?>

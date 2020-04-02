@@ -10,6 +10,7 @@ class EmployeeDao {
 	const TABLE_NAME = 'employee';
 	
 	const COL_ID = 'id';
+	const COL_EMPLOYEE_NO = 'employee_no';
 	const COL_NAME = 'name';
 	const COL_HIRAGANA = 'hiragana';
 	const COL_LOGIN_ID = 'login_id';

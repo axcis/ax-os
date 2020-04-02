@@ -17,4 +17,8 @@ $lang['document_dir'] = "E:/var/files/document/";
 // $lang['ati_files_url'] = "http://192.168.56.102/ati/files/";
 $lang['ati_content_dir'] = "E:/xampp/htdocs/ati/files/";
 $lang['ati_files_url'] = "http://localhost/ati/files/";
+
+//給料明細csvデータ一時格納ディレクトリ
+// $lang['salary_detail_csv_dir'] = "/var/files/tmp/";
+$lang['salary_detail_csv_dir'] = "E:/var/files/tmp/";
 ?>

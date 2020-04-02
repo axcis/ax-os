@@ -1,6 +1,7 @@
 {
     "require": {
         "twig/twig" : "2.12.5",
-        "phpoffice/phpspreadsheet": "1.5.2"
+        "phpoffice/phpspreadsheet": "1.5.2",
+        "tecnickcom/tcpdf": "6.3.5"
     }
 }
